@@ -1,0 +1,56 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-fsanitize=address,undefined",
+      "-g",
+      "-I",
+      "include/",
+      "-o",
+      "build/obj/gen_picross.o",
+      "src/gen_picross.c"
+    ],
+    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
+    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/gen_picross.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/gen_picross.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-fsanitize=address,undefined",
+      "-g",
+      "-I",
+      "include/",
+      "-o",
+      "build/obj/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
+    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/main.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-fsanitize=address,undefined",
+      "-g",
+      "-I",
+      "include/",
+      "-o",
+      "build/obj/utils.o",
+      "src/utils.c"
+    ],
+    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
+    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/utils.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/utils.o"
+  }
+]
