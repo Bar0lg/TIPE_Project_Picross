@@ -11,7 +11,9 @@ automate_cd* init_automate(int size_alpha,int size_etats){
     int** delta_res = (int**)malloc(sizeof(int*)*size_etats);
     for (int i=0;i<size_etats;i++){
         int* delta_bis = (int*)malloc(sizeof(int)*size_alpha);
-        memset(delta_bis, size_etats-1,size_alpha);
+        for (int j=0;j<size_alpha;j++){
+            delta_bis[j] = size_etats-1;
+        }
         delta_res[i] = delta_bis;
     }
     bool* finaux_res = (bool*)calloc(sizeof(bool),size_etats);
@@ -31,25 +33,22 @@ void free_auto(automate_cd* a){
     free(a);
 }
 
-int conv_lettre(char l){
-    return (int)l - (int)('0');
+
+void add_connection(automate_cd* A,int etat_d,int lettre,int etat_f){
+    A->delta[etat_d][lettre] = etat_f;
 }
 
-void add_connection(automate_cd* A,int etat_d,char lettre,int etat_f){
-    A->delta[etat_d][conv_lettre(lettre)] = etat_f;
-}
-
-int delta_etoile_afd(automate_cd* A,int q,char* input){
+int delta_etoile_afd(automate_cd* A,int q,int* input,int size_input){
     int etat_curr = q;
     int i = 0;
-    while (input[i] != '\0' && etat_curr != A->puit){
-        etat_curr = A->delta[etat_curr][conv_lettre(input[i])];
+    while (i < size_input && etat_curr != A->puit){
+        etat_curr = A->delta[etat_curr][input[i]];
         i++;
     }
     return etat_curr;
 
 }
 
-bool reconnu_afd(automate_cd* A,char* input){
-    return A->finaux[delta_etoile_afd(A, A->depart,input)];
+bool reconnu_afd(automate_cd* A,int* input,int size_input){
+    return A->finaux[delta_etoile_afd(A, A->depart,input,size_input)];
 }

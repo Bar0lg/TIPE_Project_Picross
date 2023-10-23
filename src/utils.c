@@ -15,6 +15,7 @@ void free_int_int(int** t,int n){
 
 void print_picc(picross_grid* p){
     printf("\n\n");
+    printf("--------------\n");
     for(int i=0;i<p->size;i++){
         for (int j=0;j<p->size;j++){
             if (p->grid[i][j] == 1){
@@ -25,6 +26,7 @@ void print_picc(picross_grid* p){
         }
         printf("\n");
     }
+    printf("--------------\n");
 }
 
 void print_tab(int* t, int size){
@@ -70,6 +72,7 @@ void print_auto(automate_cd* A){
     printf("\n");
     printf("Nb delta: %d\n",A->nb_lettres);
     printf("Nb etats: %d\n",A->nb_etats);
+    printf("Etat puit:%d\n",A->puit);
     printf("Etat depart: %d\n",A->depart);
     printf("Etat finaux:");print_bool_tab(A->finaux,A->nb_etats);printf("\n");
     for (int i=0;i<A->nb_etats;i++){

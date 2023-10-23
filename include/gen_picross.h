@@ -9,6 +9,9 @@ typedef struct picross_grid_s picross_grid;
 struct picross_numbers_s {int** lig;int** col;int size;};
 typedef struct picross_numbers_s picross_numbers;
 
+struct valideur_total_s {automate_cd** ligne;automate_cd** col;int size};
+typedef struct valideur_total_s valideur_total;
+
 picross_grid* gen_random_grid(int size, int chance);
 
 picross_numbers* gen_numbers_from_grid(picross_grid* grid);
@@ -20,4 +23,6 @@ automate_cd* generer_automate_ligne(int* ligne,int size_picc);
 void free_picross(picross_grid* p);
 
 void free_numbers(picross_numbers* n);
+
+void free_valideur_total(valideur_total* A);
 #endif

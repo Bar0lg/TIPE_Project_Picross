@@ -101,6 +101,7 @@ automate_cd* generer_automate_ligne(int* ligne,int size_picc){
     int index = 0;
     while (ligne[index] != 0 && index < size_tab ){
         nb_of_states += 1 + ligne[index];
+        index++;
     }
     automate_cd* res = init_automate(2, nb_of_states);
 
@@ -110,18 +111,32 @@ automate_cd* generer_automate_ligne(int* ligne,int size_picc){
             break;
         }
         //Connect to itself
-        add_connection(res, state_index,'0',state_index);
+        add_connection(res, state_index,0,state_index);
         //Fait une chaine de 1
         for (int j = 0;j<ligne[i];j++){
-            add_connection(res, state_index,'1',state_index +1);
+            add_connection(res, state_index,1,state_index +1);
             state_index++;
         }
-        //On doit finir par un zero
-        add_connection(res, state_index, '0', state_index+1);
-        state_index++;
+        //On DOIT finir par un zero si on est pas le dernier nombre
+        if (i != size_tab-1 && ligne[i+1] != 0){
+            add_connection(res, state_index, 0, state_index+1);
+            state_index++;
+        }
+        //Sinon on boucle en 0 sur le dernier
+        else{
+            add_connection(res,state_index,0,state_index);
+            state_index++;
+        }
     }
+    res->depart = 0;
+    res->finaux[res->nb_etats -2] = true;
+    res->puit = res->nb_etats -1;
+
+    return res;
 
 }
+
+
 
 void free_picross(picross_grid* p){
     free_int_int(p->grid,p->size);
@@ -132,4 +147,14 @@ void free_numbers(picross_numbers* n){
     free_int_int(n->col,n->size);
     free_int_int(n->lig,n->size);
     free(n);
+}
+
+void free_valideur_total(valideur_total* A){
+    for (int i = 0;i<A->size;i++){
+        free_auto(A->ligne[i]);
+        free_auto(A->col[i]);
+    }
+    free(A->ligne);
+    free(A->col);
+    free(A);
 }
