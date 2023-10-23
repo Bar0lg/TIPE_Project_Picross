@@ -4,6 +4,7 @@
 
 #include "utils.h"
 #include "gen_picross.h"
+#include "automates.h"
 
 picross_grid* gen_random_grid(int size, int chance){
     int** res = (int**)malloc(sizeof(int*)*size);
@@ -82,7 +83,45 @@ picross_numbers* gen_numbers_from_grid(picross_grid* grid){
     return res;
 }
 
+automate_cd* auto_de_zeros(void){
+    automate_cd* res = init_automate(2,2);
+    res->depart = 0;
+    res->finaux[0] = true;
+    res->puit = 1;
+    add_connection(res,0,'0',0);
+    return res;
+}
 
+automate_cd* generer_automate_ligne(int* ligne,int size_picc){
+    if (ligne[0] == 0){
+        return auto_de_zeros();
+    }
+    int size_tab = max_size_line(size_picc);
+    int nb_of_states = 1; //L'etat vide
+    int index = 0;
+    while (ligne[index] != 0 && index < size_tab ){
+        nb_of_states += 1 + ligne[index];
+    }
+    automate_cd* res = init_automate(2, nb_of_states);
+
+    int state_index =0;
+    for (int i=0;i<size_tab;i++){
+        if (ligne[i] == 0){
+            break;
+        }
+        //Connect to itself
+        add_connection(res, state_index,'0',state_index);
+        //Fait une chaine de 1
+        for (int j = 0;j<ligne[i];j++){
+            add_connection(res, state_index,'1',state_index +1);
+            state_index++;
+        }
+        //On doit finir par un zero
+        add_connection(res, state_index, '0', state_index+1);
+        state_index++;
+    }
+
+}
 
 void free_picross(picross_grid* p){
     free_int_int(p->grid,p->size);

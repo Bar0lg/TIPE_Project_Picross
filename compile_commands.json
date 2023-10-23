@@ -10,6 +10,24 @@
       "-I",
       "include/",
       "-o",
+      "build/obj/automates.o",
+      "src/automates.c"
+    ],
+    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
+    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/automates.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/automates.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-fsanitize=address,undefined",
+      "-g",
+      "-I",
+      "include/",
+      "-o",
       "build/obj/gen_picross.o",
       "src/gen_picross.c"
     ],
