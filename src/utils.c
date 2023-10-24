@@ -5,6 +5,7 @@
 
 #include "gen_picross.h"
 #include "automates.h"
+#include "utils.h"
 
 void free_int_int(int** t,int n){
     for(int i =0;i<n;i++){
@@ -103,4 +104,18 @@ int inverse_valeur(int i){
     }else {
     return 0;
     }
+}
+
+void free_liste(liste l){
+    if (l->suivant != NULL){
+        free_liste(l->suivant);
+    }
+    free(l);
+}
+
+liste add_to_liste(int x,liste l){
+    liste res = (liste)malloc(sizeof(maillon));
+    res->val = x;
+    res->suivant = l;
+    return res;
 }
