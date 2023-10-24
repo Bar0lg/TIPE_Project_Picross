@@ -2,11 +2,13 @@
 #define GEN_PICROSS_H
 
 #include "automates.h"
+#include "listes.h"
+
 
 struct picross_grid_s {int size; int** grid;};
 typedef struct picross_grid_s picross_grid;
 
-struct picross_numbers_s {int** lig;int** col;int size;};
+struct picross_numbers_s {liste* lig;liste* col;int size;};
 typedef struct picross_numbers_s picross_numbers;
 
 struct valideur_total_s {automate_cd** ligne;automate_cd** col;int size;};
@@ -15,6 +17,16 @@ typedef struct valideur_total_s valideur_total;
 picross_grid* gen_empty_grid(int size);
 
 picross_grid* gen_random_grid(int size, int chance);
+
+//Fait transposer la grille tel une matrice 
+picross_grid* tourner_grille(picross_grid* grid);
+
+//Affiche une grille de picross
+void print_picc(picross_grid* p);
+
+//Affiche les nombres des lignes et colonnes
+void print_nums(picross_numbers* nums);
+
 
 picross_numbers* gen_numbers_from_grid(picross_grid* grid);
 
@@ -26,7 +38,7 @@ valideur_total* gen_valideur_total(picross_numbers* nums);
 
 void free_picross(picross_grid* p);
 
-void free_numbers(picross_numbers* n);
+void free_numbers(picross_numbers* nums);
 
 void free_valideur_total(valideur_total* A);
 #endif

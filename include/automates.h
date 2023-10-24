@@ -24,4 +24,7 @@ int delta_etoile_afd(automate_cd* A,int q,int* input, int size_input);
 
 bool reconnu_afd(automate_cd* A,int* input, int size_input);
 
+//Affiche l'automate
+void print_auto(automate_cd* A);
+
 #endif

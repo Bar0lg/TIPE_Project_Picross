@@ -2,9 +2,10 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "utils.h"
 #include "gen_picross.h"
+#include "utils.h"
 #include "automates.h"
+#include "listes.h"
 
 picross_grid* gen_empty_grid(int size){
     int** res_grid = (int**)malloc(sizeof(int*)*size);
@@ -40,60 +41,104 @@ picross_grid* gen_random_grid(int size, int chance){
 picross_numbers* gen_numbers_from_grid(picross_grid* grid){
     int size = grid->size;
     //Lines
-    int** lines_tab = (int**)malloc(sizeof(int*)*size);
-    int count = 0;
-    int index_tab = 0;
-    for (int i = 0;i<size;i++){
-        int* line_tmp = (int*)calloc(ceil((float)size / 2), sizeof(int));
+    liste* res_ligne = (liste*)malloc(sizeof(liste)*size);
+    for (int i =0;i<size;i++){
+        liste res_ligne_bis = NULL;
+        int size_chunk = 0;
         for (int j=0;j<size;j++){
             if (grid->grid[i][j] == 1){
-                count++;
-            }else{
-                if (count != 0){
-                    line_tmp[index_tab] = count;
-                    count = 0;
-                    index_tab++;
-                }   
+                size_chunk++;
             }
-        }
-        if (count != 0){
-            line_tmp[index_tab] = count;
-        }   
-        lines_tab[i] = line_tmp;
-        count = 0;
-        index_tab = 0;
-    }
-    //Cols
-    int** cols_tab = (int**)malloc(sizeof(int*)*size);
-    count = 0;
-    index_tab = 0;
-    for (int i = 0;i<size;i++){
-        int* col_tmp = (int*)calloc(ceil((float)size / 2), sizeof(int));
-        for (int j=0;j<size;j++){
-            if (grid->grid[j][i] == 1){
-                count++;
-            }else{
-                if (count != 0){
-                col_tmp[index_tab] = count;
-                count = 0;
-                index_tab++;
+            else{
+                if (size_chunk != 0){
+                    res_ligne_bis = add_to_liste(size_chunk,res_ligne_bis);
+                    size_chunk = 0;
                 }
             }
         }
-        if (count != 0){
-            col_tmp[index_tab] = count;
-            count = 0;
+        if (size_chunk != 0){
+            res_ligne_bis = add_to_liste(size_chunk,res_ligne_bis);
+            size_chunk = 0;
         }
-        cols_tab[i] = col_tmp;
-        count = 0;
-        index_tab = 0;
+        res_ligne[i] = res_ligne_bis;
+    
+    }
+    //Cols
+    liste* res_cols = (liste*)malloc(sizeof(liste)*size);
+    for (int i =0;i<size;i++){
+        liste res_cols_bis = NULL;
+        int size_chunk = 0;
+        for (int j=0;j<size;j++){
+            if (grid->grid[j][i] == 1){
+                size_chunk++;
+            }
+            else{
+                if (size_chunk != 0){
+                    res_cols_bis = add_to_liste(size_chunk,res_cols_bis);
+                    size_chunk = 0;
+                }
+            }
+        }
+        if (size_chunk != 0){
+            res_cols_bis = add_to_liste(size_chunk,res_cols_bis);
+            size_chunk = 0;
+        }
+        res_cols[i] = res_cols_bis;
+    
     }
     picross_numbers* res = (picross_numbers*)malloc(sizeof(picross_numbers));
     res->size = size;
-    res->lig = lines_tab;
-    res->col = cols_tab;
-    return res;
+    res->lig = res_ligne;
+    res->col = res_cols;
+
 }
+
+picross_grid* tourner_grille(picross_grid* grid){
+    int** res_grid = (int**)malloc(sizeof(int*)*grid->size);
+    for (int i=0;i<grid->size;i++){
+        int* res_grid_bis = (int*)malloc(sizeof(int)*grid->size);
+        for (int j=0;j<grid->size;j++){
+            res_grid_bis[j] = grid->grid[j][i];
+        }
+        res_grid[i] = res_grid_bis;
+    }
+    picross_grid* res = (picross_grid*)malloc(sizeof(picross_grid));
+    res->size = grid->size;
+    res->grid = res_grid;
+    return res;
+
+}
+
+void print_picc(picross_grid* p){
+    printf("\n\n");
+    printf("--------------\n");
+    for(int i=0;i<p->size;i++){
+        for (int j=0;j<p->size;j++){
+            if (p->grid[i][j] == 1){
+                printf("#");
+            }else{
+                printf(" ");
+            }
+        }
+        printf("\n");
+    }
+    printf("--------------\n");
+}
+
+void print_nums(picross_numbers* nums){
+    int size_small = ceil((float)nums->size/2);
+    printf("\n");
+    printf("Ligne:[");
+    for (int i=0;i<nums->size;i++){
+        print_tab(nums->lig[i],size_small);printf(" ");
+    }
+    printf("]\nCols:[");
+    for (int i=0;i<nums->size;i++){
+        print_tab(nums->col[i],size_small);printf(" ");
+    }
+    printf("]\n");
+}
+
 
 automate_cd* auto_de_zeros(void){
     automate_cd* res = init_automate(2,2);
@@ -168,10 +213,13 @@ void free_picross(picross_grid* p){
     free(p);
 }
 
-void free_numbers(picross_numbers* n){
-    free_int_int(n->col,n->size);
-    free_int_int(n->lig,n->size);
-    free(n);
+void free_numbers(picross_numbers* nums){
+    for(int i=0;i<nums->size;i++){
+        free_liste(nums->lig[i]);
+        free_liste(nums->col[i]);
+
+    }
+    free(nums);
 }
 
 void free_valideur_total(valideur_total* A){

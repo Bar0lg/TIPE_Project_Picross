@@ -27,6 +27,8 @@ automate_cd* init_automate(int size_alpha,int size_etats){
     return res;
 }
 
+
+
 void free_auto(automate_cd* a){
     free_int_int(a->delta, a->nb_etats);
     free(a->finaux);
@@ -51,4 +53,17 @@ int delta_etoile_afd(automate_cd* A,int q,int* input,int size_input){
 
 bool reconnu_afd(automate_cd* A,int* input,int size_input){
     return A->finaux[delta_etoile_afd(A, A->depart,input,size_input)];
+}
+
+void print_auto(automate_cd* A){
+    printf("\n");
+    printf("Nb delta: %d\n",A->nb_lettres);
+    printf("Nb etats: %d\n",A->nb_etats);
+    printf("Etat puit:%d\n",A->puit);
+    printf("Etat depart: %d\n",A->depart);
+    printf("Etat finaux:");print_bool_tab(A->finaux,A->nb_etats);printf("\n");
+    for (int i=0;i<A->nb_etats;i++){
+        print_tab(A->delta[i],A->nb_lettres);
+    }
+    printf("\n");
 }
