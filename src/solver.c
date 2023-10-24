@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 #include "automates.h"
-#include "gen_picross.h"
+#include "picross.h"
 #include "utils.h"
 
 bool est_solution_valide_total(picross_grid* grid,valideur_total* valideur){

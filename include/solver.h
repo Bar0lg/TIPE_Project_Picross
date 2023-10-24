@@ -1,7 +1,8 @@
 #ifndef SOLVER_H
 #define SOLVER_H
 
-#include "gen_picross.h"
+#include "picross.h"
+#include "valideurs.h"
 
 //Verifie si une grille complete est valide
 bool est_solution_valide_total(picross_grid* grid,valideur_total* valideur);

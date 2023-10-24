@@ -1,5 +1,5 @@
-#ifndef GEN_PICROSS_H
-#define GEN_PICROSS_H
+#ifndef PICROSS_H
+#define PICROSS_H
 
 #include "automates.h"
 #include "listes.h"
@@ -32,14 +32,6 @@ void print_nums(picross_numbers* nums);
 //prend une grille et en tire ses nombres
 picross_numbers* gen_numbers_from_grid(picross_grid* grid);
 
-//Automate qui reconnais une ligne vide
-automate_d* auto_de_zeros(void);
-
-//Genere un automate qui recconais la ligne donnee
-automate_d* generer_automate_ligne(liste ligne);
-
-//Genere tous les automates poutes tt lignes et colonnes
-valideur_total* gen_valideur_total(picross_numbers* nums);
 
 //Libere une grille
 void free_picross(picross_grid* p);
@@ -47,6 +39,5 @@ void free_picross(picross_grid* p);
 //Libere les nombres
 void free_numbers(picross_numbers* nums);
 
-//Libere le valideur
-void free_valideur_total(valideur_total* A);
+
 #endif

@@ -4,7 +4,7 @@
 
 #include "automates.h"
 #include "utils.h"
-#include "gen_picross.h"
+#include "picross.h"
 #include "solver.h"
 
 int main(){
