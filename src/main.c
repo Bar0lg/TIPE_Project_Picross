@@ -17,6 +17,9 @@ int main(){
     print_nums(test_nums);
     
     valideur_total* valid_1 = gen_valideur_total(test_nums);
+
+    //print_auto(valid_1->ligne[3]);
+    //print_auto(valid_1->col[3]);
     
     picross_grid* test_brute = brute_force(valid_1);
 

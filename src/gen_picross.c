@@ -42,54 +42,52 @@ picross_numbers* gen_numbers_from_grid(picross_grid* grid){
     int size = grid->size;
     //Lines
     liste* res_ligne = (liste*)malloc(sizeof(liste)*size);
-    for (int i =0;i<size;i++){
-        liste res_ligne_bis = NULL;
-        int size_chunk = 0;
-        for (int j=0;j<size;j++){
-            if (grid->grid[i][j] == 1){
-                size_chunk++;
-            }
-            else{
-                if (size_chunk != 0){
-                    res_ligne_bis = add_to_liste(size_chunk,res_ligne_bis);
-                    size_chunk = 0;
-                }
-            }
-        }
-        if (size_chunk != 0){
-            res_ligne_bis = add_to_liste(size_chunk,res_ligne_bis);
-            size_chunk = 0;
-        }
-        res_ligne[i] = res_ligne_bis;
-    
-    }
-    //Cols
     liste* res_cols = (liste*)malloc(sizeof(liste)*size);
     for (int i =0;i<size;i++){
+        liste res_ligne_bis = NULL;
         liste res_cols_bis = NULL;
-        int size_chunk = 0;
-        for (int j=0;j<size;j++){
-            if (grid->grid[j][i] == 1){
-                size_chunk++;
+        int size_chunk_ligne = 0;
+        int size_chunk_col =0;
+        for (int j=size-1;j>-1;j--){
+            //Ligne
+            if (grid->grid[i][j] == 1){
+                size_chunk_ligne++;
             }
             else{
-                if (size_chunk != 0){
-                    res_cols_bis = add_to_liste(size_chunk,res_cols_bis);
-                    size_chunk = 0;
+                if (size_chunk_ligne != 0){
+                    res_ligne_bis = add_to_liste(size_chunk_ligne,res_ligne_bis);
+                    size_chunk_ligne = 0;
                 }
             }
+            //Colonnes
+            if (grid->grid[j][i] == 1){
+                size_chunk_col++;
+            }
+            else{
+                if (size_chunk_col != 0){
+                    res_cols_bis = add_to_liste(size_chunk_col,res_cols_bis);
+                    size_chunk_col = 0;
+                }
+            }
+            
         }
-        if (size_chunk != 0){
-            res_cols_bis = add_to_liste(size_chunk,res_cols_bis);
-            size_chunk = 0;
+        if (size_chunk_ligne != 0){
+            res_ligne_bis = add_to_liste(size_chunk_ligne,res_ligne_bis);
+            size_chunk_ligne = 0;
         }
+        if (size_chunk_col != 0){
+            res_cols_bis = add_to_liste(size_chunk_col,res_cols_bis);
+            size_chunk_col = 0;
+        }
+        res_ligne[i] = res_ligne_bis;
         res_cols[i] = res_cols_bis;
     
-    }
+    } 
     picross_numbers* res = (picross_numbers*)malloc(sizeof(picross_numbers));
     res->size = size;
     res->lig = res_ligne;
     res->col = res_cols;
+    return res;
 
 }
 
@@ -126,56 +124,51 @@ void print_picc(picross_grid* p){
 }
 
 void print_nums(picross_numbers* nums){
-    int size_small = ceil((float)nums->size/2);
     printf("\n");
     printf("Ligne:[");
     for (int i=0;i<nums->size;i++){
-        print_tab(nums->lig[i],size_small);printf(" ");
+        print_liste(nums->lig[i]);printf(" ");
     }
     printf("]\nCols:[");
     for (int i=0;i<nums->size;i++){
-        print_tab(nums->col[i],size_small);printf(" ");
+        print_liste(nums->col[i]);printf(" ");
     }
     printf("]\n");
 }
 
 
-automate_cd* auto_de_zeros(void){
-    automate_cd* res = init_automate(2,2);
+automate_d* auto_de_zeros(void){
+    automate_d* res = init_automate(2,1);
     res->depart = 0;
     res->finaux[0] = true;
-    res->puit = 1;
     add_connection(res,0,0,0);
     return res;
 }
 
-automate_cd* generer_automate_ligne(int* ligne,int size_picc){
-    if (ligne[0] == 0){
+automate_d* generer_automate_ligne(liste ligne){
+    if (ligne == NULL){
         return auto_de_zeros();
     }
-    int size_tab = max_size_line(size_picc);
     int nb_of_states = 1; //L'etat vide
-    int index = 0;
-    while (index < size_tab  && ligne[index] != 0 ){
-        nb_of_states += 1 + ligne[index];
-        index++;
+    liste ligne_to_parse = ligne;
+    while (ligne_to_parse != NULL){
+        nb_of_states += 1 + ligne_to_parse->val;
+        ligne_to_parse = ligne_to_parse->suivant;
     }
-    automate_cd* res = init_automate(2, nb_of_states);
+    automate_d* res = init_automate(2, nb_of_states);
 
+    ligne_to_parse = ligne;
     int state_index =0;
-    for (int i=0;i<size_tab;i++){
-        if (ligne[i] == 0){
-            break;
-        }
+    while (ligne_to_parse != NULL){
         //Connect to itself
         add_connection(res, state_index,0,state_index);
         //Fait une chaine de 1
-        for (int j = 0;j<ligne[i];j++){
+        for (int j = 0;j<ligne_to_parse->val;j++){
             add_connection(res, state_index,1,state_index +1);
             state_index++;
         }
         //On DOIT finir par un zero si on est pas le dernier nombre
-        if (i != size_tab-1 && ligne[i+1] != 0){
+        if (ligne_to_parse->suivant != NULL){
             add_connection(res, state_index, 0, state_index+1);
             state_index++;
         }
@@ -184,21 +177,21 @@ automate_cd* generer_automate_ligne(int* ligne,int size_picc){
             add_connection(res,state_index,0,state_index);
             state_index++;
         }
+        ligne_to_parse = ligne_to_parse->suivant;
     }
     res->depart = 0;
     res->finaux[res->nb_etats -2] = true;
-    res->puit = res->nb_etats -1;
 
     return res;
 
 }
 
 valideur_total* gen_valideur_total(picross_numbers* nums){
-    automate_cd** ligne = (automate_cd**)malloc(sizeof(automate_cd*)*nums->size);
-    automate_cd** cols = (automate_cd**)malloc(sizeof(automate_cd*)*nums->size);
+    automate_d** ligne = (automate_d**)malloc(sizeof(automate_d*)*nums->size);
+    automate_d** cols = (automate_d**)malloc(sizeof(automate_d*)*nums->size);
     for(int i=0;i<nums->size;i++){
-        ligne[i] = generer_automate_ligne(nums->lig[i],nums->size);
-        cols[i] = generer_automate_ligne(nums->col[i],nums->size);
+        ligne[i] = generer_automate_ligne(nums->lig[i]);
+        cols[i] = generer_automate_ligne(nums->col[i]);
     }
     valideur_total* res = (valideur_total*)malloc(sizeof(valideur_total));
     res->size = nums->size;
@@ -207,6 +200,9 @@ valideur_total* gen_valideur_total(picross_numbers* nums){
     return res;
 }
 
+/*bool cmp_grid(picross_grid* g1,picross_grid* g2){
+    bool res = true;
+}*/
 
 void free_picross(picross_grid* p){
     free_int_int(p->grid,p->size);
@@ -219,6 +215,8 @@ void free_numbers(picross_numbers* nums){
         free_liste(nums->col[i]);
 
     }
+    free(nums->lig);
+    free(nums->col);
     free(nums);
 }
 

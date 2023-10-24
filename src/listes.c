@@ -19,6 +19,7 @@ liste add_to_liste(int x,liste l){
 }
 
 void print_liste(liste l){
+    printf("[");
     liste liste_to_print = l;
     if (l==NULL){
         printf("0");
@@ -27,4 +28,5 @@ void print_liste(liste l){
         printf("%d ",liste_to_print->val);
         liste_to_print = liste_to_print->suivant;
     }
+    printf("]");
 }

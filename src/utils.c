@@ -37,9 +37,6 @@ void print_bool_tab(bool* t, int size){
 
 
 
-int max_size_line(int size_picc){
-    return ceil((float)size_picc / 2);
-}
 
 
 

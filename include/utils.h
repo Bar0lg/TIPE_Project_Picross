@@ -17,9 +17,6 @@ void print_bool_tab(bool* t, int size);
 
 
 
-int max_size_line(int size_picc);
-
-
 //Envoie 1 quand envoye 0 et 0 quand envoiye 1
 int inverse_valeur(int i);
 
