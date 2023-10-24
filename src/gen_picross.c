@@ -6,6 +6,18 @@
 #include "gen_picross.h"
 #include "automates.h"
 
+picross_grid* gen_empty_grid(int size){
+    int** res_grid = (int**)malloc(sizeof(int*)*size);
+    for (int i=0;i<size;i++){
+        int* res_grid_bis = (int*)calloc(size,sizeof(int));
+        res_grid[i] = res_grid_bis;
+    }
+    picross_grid* res = (picross_grid*)malloc(sizeof(picross_grid));
+    res->size = size;
+    res->grid = res_grid;
+    return res;
+}
+
 picross_grid* gen_random_grid(int size, int chance){
     int** res = (int**)malloc(sizeof(int*)*size);
     for (int i = 0;i<size;i++){
@@ -88,7 +100,7 @@ automate_cd* auto_de_zeros(void){
     res->depart = 0;
     res->finaux[0] = true;
     res->puit = 1;
-    add_connection(res,0,'0',0);
+    add_connection(res,0,0,0);
     return res;
 }
 
@@ -99,7 +111,7 @@ automate_cd* generer_automate_ligne(int* ligne,int size_picc){
     int size_tab = max_size_line(size_picc);
     int nb_of_states = 1; //L'etat vide
     int index = 0;
-    while (ligne[index] != 0 && index < size_tab ){
+    while (index < size_tab  && ligne[index] != 0 ){
         nb_of_states += 1 + ligne[index];
         index++;
     }
@@ -136,6 +148,19 @@ automate_cd* generer_automate_ligne(int* ligne,int size_picc){
 
 }
 
+valideur_total* gen_valideur_total(picross_numbers* nums){
+    automate_cd** ligne = (automate_cd**)malloc(sizeof(automate_cd*)*nums->size);
+    automate_cd** cols = (automate_cd**)malloc(sizeof(automate_cd*)*nums->size);
+    for(int i=0;i<nums->size;i++){
+        ligne[i] = generer_automate_ligne(nums->lig[i],nums->size);
+        cols[i] = generer_automate_ligne(nums->col[i],nums->size);
+    }
+    valideur_total* res = (valideur_total*)malloc(sizeof(valideur_total));
+    res->size = nums->size;
+    res->ligne = ligne;
+    res->col = cols;
+    return res;
+}
 
 
 void free_picross(picross_grid* p){

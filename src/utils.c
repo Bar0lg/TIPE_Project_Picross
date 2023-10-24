@@ -80,3 +80,27 @@ void print_auto(automate_cd* A){
     }
     printf("\n");
 }
+
+picross_grid* tourner_grille(picross_grid* grid){
+    int** res_grid = (int**)malloc(sizeof(int*)*grid->size);
+    for (int i=0;i<grid->size;i++){
+        int* res_grid_bis = (int*)malloc(sizeof(int)*grid->size);
+        for (int j=0;j<grid->size;j++){
+            res_grid_bis[j] = grid->grid[j][i];
+        }
+        res_grid[i] = res_grid_bis;
+    }
+    picross_grid* res = (picross_grid*)malloc(sizeof(picross_grid));
+    res->size = grid->size;
+    res->grid = res_grid;
+    return res;
+
+}
+
+int inverse_valeur(int i){
+    if (i==0){
+        return 1;
+    }else {
+    return 0;
+    }
+}

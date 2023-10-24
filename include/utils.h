@@ -17,4 +17,8 @@ void print_nums(picross_numbers* nums);
 int max_size_line(int size_picc);
 
 void print_auto(automate_cd* A);
+
+picross_grid* tourner_grille(picross_grid* grid);
+
+int inverse_valeur(int i);
 #endif
