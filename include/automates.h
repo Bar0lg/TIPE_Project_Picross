@@ -41,7 +41,10 @@ bool reconnu_afd(automate_d* A,int* input, int size_input);
 void print_auto(automate_d* A);
 
 //Initialise un automate non deterministe
-automate_nd* init_automate_ncd(int size_alpha,int size_etats);
+automate_nd* init_automate_nd(int size_alpha,int size_etats);
+
+//Ajoute une connection dans l'automate non deterministe
+void add_connection_nd(automate_nd *A, int etat_d, int lettre, int etat_f);
 
 //Delta de l'automate non deterministe
 bool* delta_nd(automate_nd* A,bool* etats_depart,int lettre);
@@ -54,4 +57,7 @@ bool reconnu_afnd(automate_nd *A, int *input, int size_input);
 
 //Affiche l'automate non deterministe
 void print_auto_nd(automate_nd* A);
+
+//Libere un automate non det
+void free_auto_nd(automate_nd* A);
 #endif

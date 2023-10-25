@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 
 #include "automates.h"
 #include "listes.h"
@@ -72,7 +73,7 @@ void print_auto(automate_d* A){
     printf("\n");
 }
 
-automate_nd* init_automate_ncd(int size_alpha,int size_etats){
+automate_nd* init_automate_nd(int size_alpha,int size_etats){
     automate_nd* res = (automate_nd*)malloc(sizeof(automate_nd));
     liste** delta_res = (liste**)malloc(sizeof(liste*)*size_etats);
     for (int i=0;i<size_etats;i++){
@@ -128,6 +129,13 @@ bool reconnu_afnd(automate_nd *A, int *input, int size_input){
     return res;
 }
 
+
+/*automate_d* determiniser(automate_nd* A){
+    automate_d* res = init_automate(A->nb_lettres, pow(2,A->nb_etats));
+    res->depart = binary_from_bool_int(A->depart, A->nb_etats);
+    
+}*/
+
 void print_auto_nd(automate_nd* A){
     printf("\n");
     printf("Nb delta: %d\n",A->nb_lettres);
@@ -141,4 +149,15 @@ void print_auto_nd(automate_nd* A){
         }
     }
     printf("\n");
+}
+
+void free_auto_nd(automate_nd* A){
+    for(int i=0;i<A->nb_etats;i++){
+        for (int j=0;j<A->nb_lettres;j++){
+            free_liste(A->delta[i][j]);
+        }
+    }
+    free(A->depart);
+    free(A->finaux);
+    free(A);
 }

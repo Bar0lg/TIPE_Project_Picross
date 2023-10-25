@@ -11,11 +11,11 @@ typedef struct picross_grid_s picross_grid;
 struct picross_numbers_s {liste* lig;liste* col;int size;};
 typedef struct picross_numbers_s picross_numbers;
 
-struct valideur_total_s {automate_d** ligne;automate_d** col;int size;};
-typedef struct valideur_total_s valideur_total;
-
 //Genere une grille vide
 picross_grid* gen_empty_grid(int size);
+
+//Genere une grille inconnue
+picross_grid* gen_unk_grid(int size);
 
 //Genere une grille aleatoire avec chance% que chaque case soit noire
 picross_grid* gen_random_grid(int size, int chance);

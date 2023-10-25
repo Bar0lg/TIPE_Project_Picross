@@ -36,9 +36,15 @@ void print_bool_tab(bool* t, int size){
 }
 
 
-
-
-
+int binary_from_bool_int(bool* t,int size){
+    int res =0;
+    for (int i=0;i<size;i++){
+        if (t[i]){
+            res += pow(2,i);
+        }
+    }
+    return res;
+}
 
 
 int inverse_valeur(int i){

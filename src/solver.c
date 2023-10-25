@@ -6,8 +6,9 @@
 #include "automates.h"
 #include "picross.h"
 #include "utils.h"
+#include "valideurs.h"
 
-bool est_solution_valide_total(picross_grid* grid,valideur_total* valideur){
+bool est_solution_valide_total(picross_grid* grid,valideur_det* valideur){
     bool res = true;
     picross_grid* grid_turned = tourner_grille(grid);
     for (int i=0;i<grid->size;i++){
@@ -18,7 +19,7 @@ bool est_solution_valide_total(picross_grid* grid,valideur_total* valideur){
     return res;
 }
 
-bool brute_force_rec(picross_grid* grid,valideur_total* valideur,int i,int j){
+bool brute_force_rec(picross_grid* grid,valideur_det* valideur,int i,int j){
     //printf("\n%d %d\n",i,j);
     if(i==grid->size-1 && j==grid->size-1){
         bool test = est_solution_valide_total(grid,valideur);
@@ -48,7 +49,7 @@ bool brute_force_rec(picross_grid* grid,valideur_total* valideur,int i,int j){
     return res;
 }
 
-picross_grid* brute_force(valideur_total* valideur){
+picross_grid* brute_force(valideur_det* valideur){
     picross_grid* res = gen_empty_grid(valideur->size);
     brute_force_rec(res,valideur, 0,0);
     return res;

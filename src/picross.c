@@ -19,6 +19,21 @@ picross_grid* gen_empty_grid(int size){
     return res;
 }
 
+picross_grid* gen_unk_grid(int size){
+    int** res_grid = (int**)malloc(sizeof(int*)*size);
+    for (int i=0;i<size;i++){
+        int* res_grid_bis = (int*)malloc(size*sizeof(int));
+        for (int j =0;j<size;j++){
+            res_grid_bis[j] = 2;
+        }
+        res_grid[i] = res_grid_bis;
+    }
+    picross_grid* res = (picross_grid*)malloc(sizeof(picross_grid));
+    res->size = size;
+    res->grid = res_grid;
+    return res;
+}
+
 picross_grid* gen_random_grid(int size, int chance){
     int** res = (int**)malloc(sizeof(int*)*size);
     for (int i = 0;i<size;i++){
