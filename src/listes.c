@@ -22,7 +22,7 @@ void print_liste(liste l){
     printf("[");
     liste liste_to_print = l;
     if (l==NULL){
-        printf("0");
+        printf("NULL");
     }
     while (liste_to_print != NULL){
         printf("%d ",liste_to_print->val);

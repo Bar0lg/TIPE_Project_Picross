@@ -2,7 +2,7 @@
 
 #Configuration
 NAME = TIPE
-CFLAGS = -Wall -Wextra -fsanitize=address,undefined -g -lm
+CFLAGS = -Wall -Wextra -fsanitize=address,undefined -Werror -g -lm
 NOM_RUNNER = runner.sh
 
 #Variables
@@ -58,7 +58,7 @@ $(OBJDIR)%.o:$(SRCDIR)%.c
 
 #nettoyage des fichiers intermédiares
 clean:
-	rm -rf build 
+	rm -rf build
 	echo "Nettoyage effectue."
 
 
@@ -68,7 +68,7 @@ clean:
 setup:
 ifneq (TBD,$(NAME))
 	mkdir -p src
-	mkdir -p include 
+	mkdir -p include
 	mkdir -p scripts
 	mkdir -p dat
 	mkdir -p spe
@@ -78,7 +78,7 @@ ifneq (TBD,$(NAME))
 else
 	echo "Veuiller configurer le nom de l'executable dans le Makefile"
 endif
-	
+
 
 create_runner:
 ifeq (,$(wildcard $(SPEDIR)$(NOM_RUNNER)))
@@ -87,7 +87,7 @@ ifeq (,$(wildcard $(SPEDIR)$(NOM_RUNNER)))
 else
 	echo "Fichier runner deja existant"
 endif
-	
+
 #Creation de la sandbox
 create_sandbox:
 	mkdir -p SANDBOX

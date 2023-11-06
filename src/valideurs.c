@@ -1,9 +1,11 @@
+#include <stdbool.h>
 #include <stdlib.h>
 
 #include "automates.h"
 #include "picross.h"
 #include "valideurs.h"
 #include "listes.h"
+#include "utils.h"
 
 automate_d* auto_de_zeros(void){
     automate_d* res = init_automate(2,1);
@@ -89,6 +91,7 @@ automate_nd* generer_automate_partiel_ligne(liste ligne){
         ligne_to_parse = ligne_to_parse->suivant;
     }
     automate_nd* res = init_automate_nd(3, nb_of_states);
+    //print_auto_nd(res);
 
     ligne_to_parse = ligne;
     int state_index =0;
@@ -116,7 +119,7 @@ automate_nd* generer_automate_partiel_ligne(liste ligne){
         }
         ligne_to_parse = ligne_to_parse->suivant;
     }
-    res->depart = 0;
+    res->depart[0] = true;
     res->finaux[res->nb_etats -2] = true;
 
     return res;
@@ -137,6 +140,24 @@ valideur_ndet* gen_valideur_ndet(picross_numbers* nums){
     return res;
 }
 
+valideur_partiel* gen_valideur_partiel(picross_numbers* nums){
+    automate_d** ligne = (automate_d**)malloc(sizeof(automate_d*)*nums->size);
+    automate_d** cols = (automate_d**)malloc(sizeof(automate_d*)*nums->size);
+    for(int i=0;i<nums->size;i++){
+        automate_nd* tmp_ligne = generer_automate_partiel_ligne(nums->lig[i]);
+        automate_nd* tmp_col = generer_automate_partiel_ligne(nums->col[i]);
+        ligne[i] = determiniser(tmp_ligne);
+        cols[i] = determiniser(tmp_col);
+        free_auto_nd(tmp_ligne);
+        free_auto_nd(tmp_col);
+    }
+    valideur_partiel* res = (valideur_partiel*)malloc(sizeof(valideur_partiel));
+    res->size = nums->size;
+    res->ligne = ligne;
+    res->col = cols;
+    return res;
+}
+
 void free_valideur_total(valideur_det* A){
     for (int i = 0;i<A->size;i++){
         free_auto(A->ligne[i]);
@@ -151,6 +172,16 @@ void free_valideur_ndet(valideur_ndet *A){
     for (int i = 0;i<A->size;i++){
         free_auto_nd(A->ligne[i]);
         free_auto_nd(A->col[i]);
+    }
+    free(A->ligne);
+    free(A->col);
+    free(A);
+}
+
+void free_valideur_partiel(valideur_partiel *A){
+    for (int i = 0;i<A->size;i++){
+        free_auto(A->ligne[i]);
+        free_auto(A->col[i]);
     }
     free(A->ligne);
     free(A->col);

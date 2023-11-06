@@ -19,6 +19,21 @@ bool est_solution_valide_total(picross_grid* grid,valideur_det* valideur){
     return res;
 }
 
+bool verif_ligne_col(picross_grid* grid,valideur_partiel* valideur,int ligne,int col){
+    int * col_arr = (int*)malloc(sizeof(int)*grid->size);
+    for (int i =0;i<grid->size;i++){
+        col_arr[i] = grid->grid[i][col];
+    }
+    bool res = 
+    reconnu_afd(valideur->ligne[ligne],grid->grid[ligne],grid->size) 
+    &&
+    reconnu_afd(valideur->col[col], col_arr, grid->size);
+    free(col_arr);
+    return res;
+
+    
+}
+
 bool brute_force_rec(picross_grid* grid,valideur_det* valideur,int i,int j){
     //printf("\n%d %d\n",i,j);
     if(i==grid->size-1 && j==grid->size-1){

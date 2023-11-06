@@ -55,6 +55,8 @@ bool* delta_etoile_nd(automate_nd* A,bool* etats_depart,int* input,int size_inpu
 //Verifie si un mot est reconnu par l'automate
 bool reconnu_afnd(automate_nd *A, int *input, int size_input);
 
+//Determinise un automate (TODO: Faire un meilleur algo)
+automate_d* determiniser(automate_nd* A);
 //Affiche l'automate non deterministe
 void print_auto_nd(automate_nd* A);
 

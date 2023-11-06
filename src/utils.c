@@ -46,6 +46,17 @@ int binary_from_bool_int(bool* t,int size){
     return res;
 }
 
+bool* bool_arr_from_int(int num,int size){
+    bool* res = calloc(size, sizeof(bool));
+    int num_now = num;
+    for (int i = size-1;i>-1;i--){
+        if ((num_now>=pow(2,i))){
+            res[i] = true;
+            num_now -= pow(2,i);
+        }
+    }
+    return res;
+}
 
 int inverse_valeur(int i){
     if (i==0){
@@ -55,3 +66,11 @@ int inverse_valeur(int i){
     }
 }
 
+bool and_bool_arr(bool* a1,bool* a2,int size){
+    for (int i=0;i<size;i++){
+        if (a1[i] && a2[i]){
+            return true;
+        }
+    }
+    return false;
+}

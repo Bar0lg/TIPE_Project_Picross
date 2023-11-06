@@ -129,8 +129,10 @@ void print_picc(picross_grid* p){
         for (int j=0;j<p->size;j++){
             if (p->grid[i][j] == 1){
                 printf("#");
-            }else{
+            }else if (p->grid[i][j] == 0){
                 printf(" ");
+            }else {
+                printf("?");
             }
         }
         printf("\n");

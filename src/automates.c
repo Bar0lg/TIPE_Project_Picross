@@ -130,23 +130,43 @@ bool reconnu_afnd(automate_nd *A, int *input, int size_input){
 }
 
 
-/*automate_d* determiniser(automate_nd* A){
+automate_d* determiniser(automate_nd* A){
+    //A ameliorer ASAP
     automate_d* res = init_automate(A->nb_lettres, pow(2,A->nb_etats));
     res->depart = binary_from_bool_int(A->depart, A->nb_etats);
+    for (int i=0;i<pow(2,A->nb_etats);i++){
+        bool* etats_depart = bool_arr_from_int(i,A->nb_etats);
+        if (i==0){
+            printf("YAAAAA");print_bool_tab(etats_depart, A->nb_etats);
+        }
+        for (int j=0;j<A->nb_lettres;j++){
+            bool* etat_fin = delta_nd(A,etats_depart,j);
+            int etat_fin_int = binary_from_bool_int(etat_fin,A->nb_etats);
+            add_connection_d(res, i, j, etat_fin_int);
+            free(etat_fin);
+        }
+        if (and_bool_arr(etats_depart,A->finaux,A->nb_etats)){
+            res->finaux[i] = true;
+        }
+        free(etats_depart);
+    }
+    return res;
     
-}*/
+}
 
 void print_auto_nd(automate_nd* A){
     printf("\n");
     printf("Nb delta: %d\n",A->nb_lettres);
     printf("Nb etats: %d\n",A->nb_etats);
 
-    printf("Etat depart:");print_bool_tab(A->depart,A->nb_etats);
+    printf("Etat depart:");print_bool_tab(A->depart,A->nb_etats);printf("\n");
     printf("Etat finaux:");print_bool_tab(A->finaux,A->nb_etats);printf("\n");
     for (int i=0;i<A->nb_etats;i++){
+        printf("[");
         for (int j=0;j<A->nb_lettres;j++){
             print_liste(A->delta[i][j]);
         }
+        printf("]");
     }
     printf("\n");
 }
@@ -156,7 +176,9 @@ void free_auto_nd(automate_nd* A){
         for (int j=0;j<A->nb_lettres;j++){
             free_liste(A->delta[i][j]);
         }
+        free(A->delta[i]);
     }
+    free(A->delta);
     free(A->depart);
     free(A->finaux);
     free(A);
