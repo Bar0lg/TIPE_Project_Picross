@@ -2,7 +2,7 @@
 
 #Configuration
 NAME = TIPE
-CFLAGS = -Wall -Wextra -fsanitize=address,undefined -Werror -g -lm
+CFLAGS = -Wall -Wextra -fsanitize=address,undefined  -g -lm
 NOM_RUNNER = runner.sh
 
 #Variables

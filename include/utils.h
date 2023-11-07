@@ -5,6 +5,9 @@
 #include <stdbool.h>
 
 
+#define Fl(n) (int)1 << n
+
+
 //Libere un tableau de tableau d'entier
 void free_int_int(int** t,int n);
 

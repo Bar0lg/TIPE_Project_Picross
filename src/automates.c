@@ -137,7 +137,7 @@ automate_d* determiniser(automate_nd* A){
     for (int i=0;i<pow(2,A->nb_etats);i++){
         bool* etats_depart = bool_arr_from_int(i,A->nb_etats);
         if (i==0){
-            printf("YAAAAA");print_bool_tab(etats_depart, A->nb_etats);
+            //printf("YAAAAA");print_bool_tab(etats_depart, A->nb_etats);
         }
         for (int j=0;j<A->nb_lettres;j++){
             bool* etat_fin = delta_nd(A,etats_depart,j);
