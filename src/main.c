@@ -17,6 +17,8 @@
 #define QUIET Fl(5)
 #define PRINTSEED Fl(6)
 #define DEBUG Fl(7)
+#define PRINTMODELE Fl(8)
+#define PRINTSOL Fl(9)
 
 int main(int argc,char** argv){
     int n = 3;
@@ -65,8 +67,14 @@ int main(int argc,char** argv){
         if (strcmp(arg,"--debug") == 0){
             options |= DEBUG;
         }
+        if (strcmp(arg,"--print-model") == 0){
+            options |= PRINTMODELE;
+        }
+        if (strcmp(arg,"--print-sol") == 0){
+            options |= PRINTSOL;
+        }
         if (strcmp(arg, "--help") == 0){
-            printf("Options: -n --seed --iter --chance --backtrack --brute --print-time-valideur --print-time-algo --print-seed --quiet --debug\n ");
+            printf("Options: -n --seed --iter --chance --backtrack --brute --print-time-valideur --print-time-algo --print-seed --quiet --debug --print-model --print-sol\n ");
         }
     }
     printf("Debut du programme...\n");
@@ -85,6 +93,9 @@ int main(int argc,char** argv){
         srand(seed+boucle);
         picross_grid* grille_a_trouver = gen_random_grid(n,chance);
         picross_numbers* numeros = gen_numbers_from_grid(grille_a_trouver);
+        if(options & PRINTMODELE){
+            print_picc(grille_a_trouver);
+        }
 
         if (BRUTE & options){
             picross_grid* grille_vide = gen_empty_grid(n);
@@ -99,13 +110,17 @@ int main(int argc,char** argv){
             delta_valid = (double)(t2_valid - t1_valid) / CLOCKS_PER_SEC;
             delta_algo  = (double)(t2_algo - t1_algo) / CLOCKS_PER_SEC;
 
+            if (options & PRINTSOL){
+                print_picc(grille_vide);
+            }
+
             free_picross(grille_vide);
             free_valideur_det(valideur_complet);
 
 
             //En cas d'erreur (ce qui est normalment impossible)
             if (!res){
-                printf("Erreur de backtrack seed:%d\n",seed+boucle);
+                printf("Erreur de brute-force seed:%d\n",seed+boucle);
                 return -1;
             }
             
@@ -135,13 +150,17 @@ int main(int argc,char** argv){
             delta_valid = (double)(t2_valid - t1_valid) / CLOCKS_PER_SEC;
             delta_algo  = (double)(t2_algo - t1_algo) / CLOCKS_PER_SEC;
 
+            if (options & PRINTSOL){
+                print_picc(grille_inconnue);
+            }
+
             free_picross(grille_inconnue);
             free_valideur_det(valideur_partiel);
 
 
             //En cas d'erreur (ce qui est normalment impossible)
             if (!res){
-                printf("Erreur de brute_force seed:%d\n",seed+boucle);
+                printf("Erreur de backtrack seed:%d\n",seed+boucle);
                 return -1;
             }
             
