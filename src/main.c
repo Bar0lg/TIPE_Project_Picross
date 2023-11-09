@@ -100,7 +100,7 @@ int main(int argc,char** argv){
             delta_algo  = (double)(t2_algo - t1_algo) / CLOCKS_PER_SEC;
 
             free_picross(grille_vide);
-            free_valideur_total(valideur_complet);
+            free_valideur_det(valideur_complet);
 
 
             //En cas d'erreur (ce qui est normalment impossible)
@@ -125,7 +125,7 @@ int main(int argc,char** argv){
         if (BACKTRACK & options){
             picross_grid* grille_inconnue = gen_unk_grid(n);
             t1_valid = clock();
-            valideur_partiel* valideur_partiel = gen_valideur_partiel(numeros);
+            valideur_det* valideur_partiel = gen_valideur_partiel(numeros);
             t2_valid = clock();
 
             t1_algo = clock();
@@ -136,7 +136,7 @@ int main(int argc,char** argv){
             delta_algo  = (double)(t2_algo - t1_algo) / CLOCKS_PER_SEC;
 
             free_picross(grille_inconnue);
-            free_valideur_partiel(valideur_partiel);
+            free_valideur_det(valideur_partiel);
 
 
             //En cas d'erreur (ce qui est normalment impossible)

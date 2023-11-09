@@ -20,7 +20,7 @@ bool est_solution_valide_total(picross_grid* grid,valideur_det* valideur){
     return res;
 }
 
-bool verif_ligne_col(picross_grid* grid,valideur_partiel* valideur,int ligne,int col){
+bool verif_ligne_col(picross_grid* grid,valideur_det* valideur,int ligne,int col){
     int* col_arr = (int*)malloc(sizeof(int)*grid->size);
     for (int i = 0; i < grid->size; i++){
         col_arr[i] = grid->grid[i][col];
@@ -66,7 +66,7 @@ bool bruteforce(picross_grid* grid,valideur_det* valideur,int i,int j){
 }
 
 
-bool backtracking(picross_grid* grid, valideur_partiel* valideur, int i, int j){
+bool backtracking(picross_grid* grid, valideur_det* valideur, int i, int j){
     if (i == grid->size -1 && j == grid->size-1){
         if (grid->grid[i][j] != 2){
             return true;

@@ -8,13 +8,13 @@
 bool est_solution_valide_total(picross_grid* grid,valideur_det* valideur);
 
 //Verifie une seule ligne et colonne O(n)
-bool verif_ligne_col(picross_grid* grid,valideur_partiel* valideur,int ligne,int col);
+bool verif_ligne_col(picross_grid* grid,valideur_det* valideur,int ligne,int col);
 
 //Brute-force O(2^(n^2))
 bool bruteforce(picross_grid* grid,valideur_det* valideur,int i,int j);
 
 
 //Backtracking
-bool backtracking(picross_grid* grid,valideur_partiel* valideur,int i,int j);
+bool backtracking(picross_grid* grid,valideur_det* valideur,int i,int j);
 
 #endif

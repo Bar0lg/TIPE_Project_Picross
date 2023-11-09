@@ -140,7 +140,7 @@ valideur_ndet* gen_valideur_ndet(picross_numbers* nums){
     return res;
 }
 
-valideur_partiel* gen_valideur_partiel(picross_numbers* nums){
+valideur_det* gen_valideur_partiel(picross_numbers* nums){
     automate_d** ligne = (automate_d**)malloc(sizeof(automate_d*)*nums->size);
     automate_d** cols = (automate_d**)malloc(sizeof(automate_d*)*nums->size);
     for(int i=0;i<nums->size;i++){
@@ -151,14 +151,14 @@ valideur_partiel* gen_valideur_partiel(picross_numbers* nums){
         free_auto_nd(tmp_ligne);
         free_auto_nd(tmp_col);
     }
-    valideur_partiel* res = (valideur_partiel*)malloc(sizeof(valideur_partiel));
+    valideur_det* res = (valideur_det*)malloc(sizeof(valideur_det));
     res->size = nums->size;
     res->ligne = ligne;
     res->col = cols;
     return res;
 }
 
-void free_valideur_total(valideur_det* A){
+void free_valideur_det(valideur_det* A){
     for (int i = 0;i<A->size;i++){
         free_auto(A->ligne[i]);
         free_auto(A->col[i]);
@@ -172,16 +172,6 @@ void free_valideur_ndet(valideur_ndet *A){
     for (int i = 0;i<A->size;i++){
         free_auto_nd(A->ligne[i]);
         free_auto_nd(A->col[i]);
-    }
-    free(A->ligne);
-    free(A->col);
-    free(A);
-}
-
-void free_valideur_partiel(valideur_partiel *A){
-    for (int i = 0;i<A->size;i++){
-        free_auto(A->ligne[i]);
-        free_auto(A->col[i]);
     }
     free(A->ligne);
     free(A->col);
