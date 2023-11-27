@@ -29,4 +29,6 @@ int inverse_valeur(int i);
 
 //Operation binaire AND sur un array
 bool and_bool_arr(bool* a1,bool* a2,int size);
+
+bool equal_bool_arr(bool* a1,bool* a2,int size);
 #endif

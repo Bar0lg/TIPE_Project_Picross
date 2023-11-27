@@ -200,12 +200,14 @@ automate_d* determiniser(automate_nd* A){
             if (and_bool_arr(etat_depart, A->finaux, A->nb_etats)){
                 res->finaux[nom_etat_depart] = true;
             }
+            if (equal_bool_arr(etat_depart, A->depart, A->nb_etats)){
+                res->depart = nom_etat_depart;
+            }
             free(etat_depart);
             dl = dl->suivant;
         }
         keys_copy = keys_copy->suivant;
     }
-    res->depart = binary_from_bool_int(A->depart,A->nb_etats);
     free_dico(atteints);
     free_liste(keys);
     return res;

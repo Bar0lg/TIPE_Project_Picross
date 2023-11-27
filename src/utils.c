@@ -74,3 +74,11 @@ bool and_bool_arr(bool* a1,bool* a2,int size){
     }
     return false;
 }
+
+bool equal_bool_arr(bool* a1,bool* a2,int size){
+    bool res = true;
+    for (int i=0;i<size;i++){
+        res = res && ((a1[i] && a2[i]) || (!a1[i] && !a2[i]));
+    }
+    return res;
+}

@@ -98,19 +98,9 @@ int main(int argc,char** argv){
     }
     printf("Debut du programme...\n");
     if (options & DEBUG){
-        //bool t[] = {false,false,false,false};
-        //printf("%d",binary_from_bool_int(t, 4));
-        //Mettre le code debug ici
-        srand(seed+1);
-        picross_grid* test_grille = gen_random_grid(n,chance);
-        print_picc(test_grille);
-        picross_numbers* test_nums = gen_numbers_from_grid(test_grille);
-        valideur_det* val_test = gen_valideur_total(test_nums);
-        printf("TEST VAL: %d\n",est_solution_valide_total(test_grille,val_test));
-
-        free_valideur_det(val_test);
-        free_picross(test_grille);
-        free_numbers(test_nums);
+        bool* test = bool_arr_from_int(1, 5);
+        print_bool_tab(test, 5);
+        free(test);
         return 0;
     }
     for (int boucle = 1;boucle < iter +1;boucle++){
@@ -175,7 +165,6 @@ int main(int argc,char** argv){
             }
 
         }
-
         if (BACKTRACK & options){
             picross_grid* grille_inconnue = gen_unk_grid(n);
             t1_valid = clock();

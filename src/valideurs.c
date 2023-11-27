@@ -120,7 +120,7 @@ automate_nd* generer_automate_partiel_ligne(liste ligne){
         ligne_to_parse = ligne_to_parse->suivant;
     }
     res->depart[0] = true;
-    res->finaux[res->nb_etats -2] = true;
+    res->finaux[res->nb_etats -1] = true;
 
     return res;
 
