@@ -35,34 +35,52 @@ bool verif_ligne_col(picross_grid* grid,valideur_det* valideur,int ligne,int col
     
 }
 
-bool bruteforce(picross_grid* grid,valideur_det* valideur,int i,int j){
-    //printf("\n%d %d\n",i,j);
-    if(i==grid->size-1 && j==grid->size-1){
-        bool test = est_solution_valide_total(grid,valideur);
-        if (!test){
-            grid->grid[i][j] = inverse_valeur(grid->grid[i][j]);
-            test = est_solution_valide_total(grid,valideur);
-        }
-        return test;
+bool verif_ligne_col_ndet(picross_grid* grid,valideur_ndet* valideur,int ligne,int col){
+    int* col_arr = (int*)malloc(sizeof(int)*grid->size);
+    for (int i = 0; i < grid->size; i++){
+        col_arr[i] = grid->grid[i][col];
     }
+    bool res = 
+        reconnu_afnd(valideur->ligne[ligne],grid->grid[ligne],grid->size) 
+        &&
+        reconnu_afnd(valideur->col[col], col_arr, grid->size);
+    free(col_arr);
+    return res;
+
     
-    bool res = false;
-    if (j == grid->size -1){
-        res =bruteforce(grid,valideur,i+1,0);
-        if (!res){
-            grid->grid[i][j] = inverse_valeur(grid->grid[i][j]);
-            res = bruteforce(grid,valideur,i+1,0);
+}
+
+bool bruteforce(picross_grid* grid,valideur_det* valideur,int i,int j){
+    if (i == grid->size-1 && j==grid->size-1){
+        //print_picc(grid);
+        if (est_solution_valide_total(grid,valideur)){
+            return true;
         }
+        grid->grid[i][j] = 1;
+        if (est_solution_valide_total(grid,valideur)){
+            return true;
+        }
+        grid->grid[i][j] = 0;
+        return false;
+    }
+    int j_next = (j+1) % grid->size;
+    int i_next;
+    if (j == grid->size -1){
+        i_next = i+1;
     }
     else{
-        res =bruteforce(grid,valideur,i,j+1);
-        if (!res){
-            grid->grid[i][j] = inverse_valeur(grid->grid[i][j]);
-            res = bruteforce(grid,valideur,i,j+1);
-        }
+        i_next = i;
     }
-    //printf("\n%d\n",res);
-    return res;
+    
+    if (bruteforce(grid,valideur, i_next, j_next)){
+        return true;
+    }
+    grid->grid[i][j] = 1;
+    if (bruteforce(grid,valideur, i_next, j_next)){
+        return true;
+    }
+    grid->grid[i][j] = 0;
+    return false;
 }
 
 
@@ -100,14 +118,61 @@ bool backtracking(picross_grid* grid, valideur_det* valideur, int i, int j){
             return true;
         }
     }
-    //printf("Zero raté:%d %d\n",i,j);
+    printf("Zero raté:%d %d\n",i,j);
     grid->grid[i][j] = 1;
     if (verif_ligne_col(grid,valideur,i,j)){
         if (backtracking(grid,valideur,i_next,j_next)){
             return true;
         }
     }
-    //printf("Tout raté:%d %d\n",i,j);
+    printf("Tout raté:%d %d\n",i,j);
+    grid->grid[i][j] = 2;
+    return false;
+
+}
+
+bool backtracking_ndet(picross_grid* grid, valideur_ndet* valideur, int i, int j){
+    if (i == grid->size -1 && j == grid->size-1){
+        if (grid->grid[i][j] != 2){
+            return true;
+        }
+        grid->grid[i][j] = 0;
+        if (verif_ligne_col_ndet(grid,valideur,i,j)){
+            return true;
+        }
+        grid->grid[i][j] = 1;
+        if (verif_ligne_col_ndet(grid,valideur,i,j)){
+            return true;
+        }
+        grid->grid[i][j] = 2;
+        return false;
+    }
+    int j_next = (j+1) % grid->size;
+    int i_next;
+    if (j == grid->size -1){
+        i_next = i+1;
+    }
+    else{
+        i_next = i;
+    }
+    //assert(i_next < grid->size);
+    if (grid->grid[i][j] != 2){
+        return backtracking_ndet(grid,valideur,i_next,j_next);
+    }
+    grid->grid[i][j] = 0;
+    if (verif_ligne_col_ndet(grid,valideur,i,j)){
+        if (backtracking_ndet(grid,valideur,i_next,j_next)){
+            return true;
+        }
+    }
+    printf("Zero raté:%d %d\n",i,j);
+    grid->grid[i][j] = 1;
+    if (verif_ligne_col_ndet(grid,valideur,i,j)){
+        if (backtracking_ndet(grid,valideur,i_next,j_next)){
+            return true;
+        }
+    }
+    printf("Tout raté:%d %d\n",i,j);
     grid->grid[i][j] = 2;
     return false;
 

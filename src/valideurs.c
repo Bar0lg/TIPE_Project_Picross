@@ -28,7 +28,7 @@ automate_d* generer_automate_ligne(liste ligne){
     if (ligne == NULL){
         return auto_de_zeros();
     }
-    int nb_of_states = 1; //L'etat vide
+    int nb_of_states = 0; //L'etat vide
     liste ligne_to_parse = ligne;
     while (ligne_to_parse != NULL){
         nb_of_states += 1 + ligne_to_parse->val;
@@ -59,7 +59,7 @@ automate_d* generer_automate_ligne(liste ligne){
         ligne_to_parse = ligne_to_parse->suivant;
     }
     res->depart = 0;
-    res->finaux[res->nb_etats -2] = true;
+    res->finaux[res->nb_etats -1] = true;
 
     return res;
 
@@ -84,7 +84,7 @@ automate_nd* generer_automate_partiel_ligne(liste ligne){
     if (ligne == NULL){
         return auto_nd_zeros();
     }
-    int nb_of_states = 1; //L'etat vide
+    int nb_of_states = 0; //L'etat vide
     liste ligne_to_parse = ligne;
     while (ligne_to_parse != NULL){
         nb_of_states += 1 + ligne_to_parse->val;

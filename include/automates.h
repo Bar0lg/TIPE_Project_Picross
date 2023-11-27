@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include "listes.h"
+#include "dicts.h"
 
 struct automate_d_s {
     int nb_lettres;
@@ -54,6 +55,9 @@ bool* delta_etoile_nd(automate_nd* A,bool* etats_depart,int* input,int size_inpu
 
 //Verifie si un mot est reconnu par l'automate
 bool reconnu_afnd(automate_nd *A, int *input, int size_input);
+
+//Donne tout les etats atteint par un afnd
+dict* etats_atteints(automate_nd* A);
 
 //Determinise un automate (TODO: Faire un meilleur algo)
 automate_d* determiniser(automate_nd* A);

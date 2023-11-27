@@ -1,7 +1,7 @@
 [
   {
     "arguments": [
-      "/usr/bin/gcc",
+      "/sbin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -19,7 +19,25 @@
   },
   {
     "arguments": [
-      "/usr/bin/gcc",
+      "/sbin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-fsanitize=address,undefined",
+      "-g",
+      "-I",
+      "include/",
+      "-o",
+      "build/obj/dicts.o",
+      "src/dicts.c"
+    ],
+    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
+    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/dicts.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/dicts.o"
+  },
+  {
+    "arguments": [
+      "/sbin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -37,7 +55,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/gcc",
+      "/sbin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -55,7 +73,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/gcc",
+      "/sbin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -73,7 +91,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/gcc",
+      "/sbin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -91,7 +109,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/gcc",
+      "/sbin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -109,7 +127,7 @@
   },
   {
     "arguments": [
-      "/usr/bin/gcc",
+      "/sbin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
