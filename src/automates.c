@@ -129,7 +129,7 @@ bool reconnu_afnd(automate_nd *A, int *input, int size_input){
     bool* res_tab = delta_etoile_nd(A,A->depart,input,size_input);
     bool res = false;
     for (int i=0;i<A->nb_etats;i++){
-        res = res || (!A->finaux[i] || res_tab[i]);
+        res = res || (A->finaux[i] && res_tab[i]);
     }
     free(res_tab);
     return res;

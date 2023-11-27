@@ -118,14 +118,14 @@ bool backtracking(picross_grid* grid, valideur_det* valideur, int i, int j){
             return true;
         }
     }
-    printf("Zero raté:%d %d\n",i,j);
+    //printf("Zero raté:%d %d\n",i,j);
     grid->grid[i][j] = 1;
     if (verif_ligne_col(grid,valideur,i,j)){
         if (backtracking(grid,valideur,i_next,j_next)){
             return true;
         }
     }
-    printf("Tout raté:%d %d\n",i,j);
+    //printf("Tout raté:%d %d\n",i,j);
     grid->grid[i][j] = 2;
     return false;
 
@@ -165,14 +165,14 @@ bool backtracking_ndet(picross_grid* grid, valideur_ndet* valideur, int i, int j
             return true;
         }
     }
-    printf("Zero raté:%d %d\n",i,j);
+    //printf("Zero raté:%d %d\n",i,j);
     grid->grid[i][j] = 1;
     if (verif_ligne_col_ndet(grid,valideur,i,j)){
         if (backtracking_ndet(grid,valideur,i_next,j_next)){
             return true;
         }
     }
-    printf("Tout raté:%d %d\n",i,j);
+    //printf("Tout raté:%d %d\n",i,j);
     grid->grid[i][j] = 2;
     return false;
 

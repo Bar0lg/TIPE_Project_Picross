@@ -103,6 +103,9 @@ int main(int argc,char** argv){
         free(test);
         return 0;
     }
+    if (options & PRINTSEED){
+        printf("seed:%d\n",seed);
+    }
     for (int boucle = 1;boucle < iter +1;boucle++){
         clock_t t1_valid = 0;
         clock_t t2_valid = 0;
@@ -182,7 +185,6 @@ int main(int argc,char** argv){
                 print_picc(grille_inconnue);
             }
 
-            print_auto(valideur_partiel->ligne[0]);
             free_picross(grille_inconnue);
             free_valideur_det(valideur_partiel);
 
@@ -252,9 +254,6 @@ int main(int argc,char** argv){
         
     }
     
-    if (options & PRINTSEED){
-        printf("seed:%d\n",seed);
-    }
     printf("Fin programme\n");
     return 0;
 }
