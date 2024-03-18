@@ -45,6 +45,24 @@ line_est_t* estimate_line(liste numbers,int n){
     return res;
 }
 
+estimation_t* full_estimation(picross_numbers* nums){
+    int n = nums->size;
+    estimation_t* res = (estimation_t*)malloc(sizeof(estimation_t));
+    line_est_t** lines = (line_est_t**)malloc(sizeof(line_est_t*)*n);
+    line_est_t** cols = (line_est_t**)malloc(sizeof(line_est_t*)*n);
+    for (int i =0;i<n;i++){
+        line_est_t* line = estimate_line(nums->lig[i],n);
+        line_est_t* col = estimate_line(nums->col[i],n);
+        lines[i] = line;
+        cols[i] = col;
+    }
+    res->n = n;
+    res->cols = cols;
+    res->lines = lines;
+
+    return res;
+}
+
 void print_estimation(line_est_t* e){
     printf("NB_BLOCKS:%d\n",e->nb_blocks);
     for (int i = 0;i<e->nb_blocks;i++){

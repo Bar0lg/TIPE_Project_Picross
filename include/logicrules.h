@@ -10,8 +10,8 @@ typedef struct {
 
 typedef struct {
     int n;
-    line_est_t* lines;
-    line_est_t* cols;
+    line_est_t** lines;
+    line_est_t** cols;
 } estimation_t;
 
 
