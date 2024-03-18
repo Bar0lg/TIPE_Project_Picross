@@ -54,3 +54,24 @@ void print_duo(duo_liste d){
     return;
 
 }
+
+int len_liste(liste l){
+    int res =0;
+    liste l_c = l;
+    while (l_c != NULL){
+        res++;
+        l_c = l_c->suivant;
+    }
+    return res;
+}
+
+int* list_to_tab(liste l){
+    int n = len_liste(l);
+    int* res = (int*)malloc(sizeof(int)*n);
+    liste l_c = l;
+    for (int i = 0;i<n;i++){
+        res[i] = l_c->val;
+        l_c =  l_c->suivant;
+    }
+    return res;
+}

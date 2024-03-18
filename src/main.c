@@ -9,6 +9,7 @@
 #include "picross.h"
 #include "solver.h"
 #include "valideurs.h"
+#include "logicrules.h"
 
 #define BRUTE Fl(1)
 #define BACKTRACK Fl(2)
@@ -98,9 +99,16 @@ int main(int argc,char** argv){
     }
     printf("Debut du programme...\n");
     if (options & DEBUG){
-        bool* test = bool_arr_from_int(1, 5);
-        print_bool_tab(test, 5);
-        free(test);
+        srand(seed);
+        picross_grid* grille_a_trouver = gen_random_grid(n,chance);
+        picross_numbers* numeros = gen_numbers_from_grid(grille_a_trouver);
+        print_picc(grille_a_trouver);
+        line_est_t* e = estimate_line(numeros->lig[0], grille_a_trouver->size);
+        print_nums(numeros);
+        print_estimation(e);
+        free_estimation(e);
+        free_picross(grille_a_trouver);
+        free_numbers(numeros);
         return 0;
     }
     if (options & PRINTSEED){

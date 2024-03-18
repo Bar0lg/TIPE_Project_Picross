@@ -37,4 +37,6 @@ void print_liste(liste l);
 
 
 void print_duo(duo_liste d);
+int len_liste(liste l);
+int* list_to_tab(liste l);
 #endif
