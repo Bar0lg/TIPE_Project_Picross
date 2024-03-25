@@ -63,15 +63,40 @@ estimation_t* full_estimation(picross_numbers* nums){
     return res;
 }
 
+
+
 void print_estimation(line_est_t* e){
-    printf("NB_BLOCKS:%d\n",e->nb_blocks);
+    printf("NB_BLOCKS:%d",e->nb_blocks);
     for (int i = 0;i<e->nb_blocks;i++){
         printf("(%d,%d) ",e->est[i].x,e->est[i].y);
     }
     printf("\n");
 }
 
+void print_full_estimation(estimation_t* e){
+    printf("LINES:\n");
+    for (int i = 0;i < e->n;i++){
+        print_estimation(e->lines[i]);
+    }
+    printf("COLS:\n");
+    for (int i = 0;i < e->n;i++){
+        print_estimation(e->cols[i]);
+    }
+    printf("\n");
+}
+
 void free_estimation(line_est_t* e){
     free(e->est);
+    free(e);
+}
+void free_full_estimation(estimation_t* e){
+    for (int i = 0;i < e->n;i++){
+        free_estimation(e->lines[i]);
+    }
+    for (int i = 0;i < e->n;i++){
+        free_estimation(e->cols[i]);
+    }
+    free(e->cols);
+    free(e->lines);
     free(e);
 }

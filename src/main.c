@@ -103,10 +103,10 @@ int main(int argc,char** argv){
         picross_grid* grille_a_trouver = gen_random_grid(n,chance);
         picross_numbers* numeros = gen_numbers_from_grid(grille_a_trouver);
         print_picc(grille_a_trouver);
-        line_est_t* e = estimate_line(numeros->lig[0], grille_a_trouver->size);
+        estimation_t* e = full_estimation(numeros);
         print_nums(numeros);
-        print_estimation(e);
-        free_estimation(e);
+        print_full_estimation(e);
+        free_full_estimation(e);
         free_picross(grille_a_trouver);
         free_numbers(numeros);
         return 0;
