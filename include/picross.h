@@ -23,6 +23,8 @@ picross_grid* gen_random_grid(int size, int chance);
 //Fait transposer la grille tel une matrice 
 picross_grid* tourner_grille(picross_grid* grid);
 
+int* get_col(picross_grid* g, int size,int col_n);
+
 //Affiche une grille de picross
 void print_picc(picross_grid* p);
 
@@ -32,6 +34,7 @@ void print_nums(picross_numbers* nums);
 //prend une grille et en tire ses nombres
 picross_numbers* gen_numbers_from_grid(picross_grid* grid);
 
+void apply_tab_to_col(picross_grid* g,int* col,int col_n);
 
 //Libere une grille
 void free_picross(picross_grid* p);

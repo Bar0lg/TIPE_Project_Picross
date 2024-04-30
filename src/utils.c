@@ -82,3 +82,9 @@ bool equal_bool_arr(bool* a1,bool* a2,int size){
     }
     return res;
 }
+
+void copy_tab(int* dest,int* src,int size){
+    for (int i  = 0;i<size;i++){
+        dest[i] = src[i];
+    }
+}

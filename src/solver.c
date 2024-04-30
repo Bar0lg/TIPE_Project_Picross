@@ -21,10 +21,7 @@ bool est_solution_valide_total(picross_grid* grid,valideur_det* valideur){
 }
 
 bool verif_ligne_col(picross_grid* grid,valideur_det* valideur,int ligne,int col){
-    int* col_arr = (int*)malloc(sizeof(int)*grid->size);
-    for (int i = 0; i < grid->size; i++){
-        col_arr[i] = grid->grid[i][col];
-    }
+    int* col_arr = get_col(grid, grid->size, col);
     bool res = 
         reconnu_afd(valideur->ligne[ligne],grid->grid[ligne],grid->size) 
         &&

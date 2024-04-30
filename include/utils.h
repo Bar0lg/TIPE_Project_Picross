@@ -31,4 +31,6 @@ int inverse_valeur(int i);
 bool and_bool_arr(bool* a1,bool* a2,int size);
 
 bool equal_bool_arr(bool* a1,bool* a2,int size);
+
+void copy_tab(int* dest,int* src,int size);
 #endif

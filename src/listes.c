@@ -45,7 +45,7 @@ void free_duo_liste(duo_liste l){
     }
 }
 
-void print_duo(duo_liste d){
+void print_duo_liste(duo_liste d){
     duo_liste d_cpy = d;
     while (d_cpy){
         printf("{%d %d} ",d_cpy->val.x,d_cpy->val.y);
@@ -53,6 +53,10 @@ void print_duo(duo_liste d){
     }
     return;
 
+}
+
+void print_duo(duo d){
+    printf("(%d,%d)",d.x,d.y);
 }
 
 int len_liste(liste l){

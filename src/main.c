@@ -102,10 +102,13 @@ int main(int argc,char** argv){
         srand(seed);
         picross_grid* grille_a_trouver = gen_random_grid(n,chance);
         picross_numbers* numeros = gen_numbers_from_grid(grille_a_trouver);
+        picross_grid* grille_unk = gen_unk_grid(n);
         print_picc(grille_a_trouver);
         estimation_t* e = full_estimation(numeros);
         print_nums(numeros);
-        print_full_estimation(e);
+        apply_rules(grille_unk, numeros, e,3);
+        print_picc(grille_unk);
+        free_picross(grille_unk);
         free_full_estimation(e);
         free_picross(grille_a_trouver);
         free_numbers(numeros);

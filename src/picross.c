@@ -122,6 +122,14 @@ picross_grid* tourner_grille(picross_grid* grid){
 
 }
 
+int* get_col(picross_grid* g, int size,int col_n){
+    int* res = (int*)malloc(sizeof(int)*size);
+    for (int i = 0;i<size;i++){
+        res[i] = g->grid[i][col_n];
+    }
+    return res;
+}
+
 void print_picc(picross_grid* p){
     printf("\n\n");
     printf("--------------\n");
@@ -159,6 +167,12 @@ void print_nums(picross_numbers* nums){
 /*bool cmp_grid(picross_grid* g1,picross_grid* g2){
     bool res = true;
 }*/
+
+void apply_tab_to_col(picross_grid* g,int* col,int col_n){
+    for (int i = 0;i<g->size;i++){
+        g->grid[i][col_n] = col[i];
+    }
+}
 
 void free_picross(picross_grid* p){
     free_int_int(p->grid,p->size);

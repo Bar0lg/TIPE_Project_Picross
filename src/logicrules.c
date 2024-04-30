@@ -59,10 +59,109 @@ estimation_t* full_estimation(picross_numbers* nums){
     res->n = n;
     res->cols = cols;
     res->lines = lines;
+    printf("TEST:%d\n",res->n);
 
     return res;
 }
 
+
+
+int rule1_1_line(int* line,int* nums,line_est_t* est,int size){
+    int res = 0;
+    int nb_blocks = est->nb_blocks;
+    for (int j = 0;j<nb_blocks;j++){
+        int start_of_block = est->est[j].x;
+        int end_of_block = est->est[j].y;
+        int u = (end_of_block - start_of_block + 1) - nums[j];
+        for (int i = start_of_block; i<end_of_block+1;i++){
+            if ( i >= 0 && line[i] != 2){
+                continue;
+            }
+            if (start_of_block + u <= i && end_of_block - u >= i){
+                res++;
+                line[i] = 1;
+            }
+        }
+    }
+    return res;
+}
+
+int rule1_2_line(int* line,int size,line_est_t* est){
+    int res =  0;
+    int nb_blocks = est->nb_blocks;
+    for (int i = 0;i<size;i++){
+        if (line[i] != 2){
+            continue;
+        }
+        if (i<est->est[0].x){
+            res++;
+            line[i] = 0;
+        }
+        if (i > est->est[nb_blocks-1].y){
+            res++;
+            line[i] = 0;
+        }
+        for (int j = 0;j<nb_blocks -1;j++){
+            if (est->est[j].y<i && i< est->est[j+1].x){
+                res++;
+                line[i] = 0;
+            }
+        }
+    }
+    return res;
+}
+
+int rule2_2line(int* line,int size,line_est_t* est){
+    int res = 0;
+    int nb_blocks = est->nb_blocks;
+    for (int j =0;j<nb_blocks;j++){
+        if (est->est[j].x-1 >=0 && line[est->est[j].x-1] ==1){
+            res++;
+            est->est[j].x++;
+        }
+        if ((est->est[j].y+1 < size )&& (line[est->est[j].y+1] == 1)){
+            res++;
+            est->est[j].y--;
+        }
+    }
+    return res;
+}
+
+
+int rule1_3line(int* line,int size,int* nums,line_est_t* est){
+    int res = 0;
+    int nb_blocks = est->nb_blocks;
+    //TODO
+}
+
+int apply_rules(picross_grid* grille_a_completer,picross_numbers* nums,estimation_t* est,int k){
+    int res = 0;
+    for (int passage = 0;passage<k;passage++){
+        for (int i = 0;i<nums->size;i++){
+            //Lignes
+            int* line = grille_a_completer->grid[i];
+            int* num_line = list_to_tab(nums->lig[i]);
+            int size = nums->size;
+            line_est_t* est_line = est->lines[i];
+            res += rule1_1_line(line, num_line, est_line,size);
+            rule2_2line(line, size, est_line);
+            res += rule1_2_line(line, size, est_line);
+            //Cols
+            int* col = get_col(grille_a_completer, size, i);
+            int* num_col = list_to_tab(nums->col[i]);
+            line_est_t* est_col = est->cols[i];
+            res += rule1_1_line(col, num_col, est_col,size);
+            rule2_2line(col, size, est_col);
+            res += rule1_2_line(col, size, est_col);
+            apply_tab_to_col(grille_a_completer, col, i);
+            free(col);
+            free(num_col);
+            free(num_line);
+
+        }
+    }
+    return res;
+}
 
 
 void print_estimation(line_est_t* e){

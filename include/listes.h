@@ -32,11 +32,12 @@ duo_liste cons(duo head,duo_liste tail);
 
 void free_duo_liste(duo_liste l);
 
+void print_duo(duo d);
 //Imprime une listes
 void print_liste(liste l);
 
 
-void print_duo(duo_liste d);
+void print_duo_liste(duo_liste d);
 int len_liste(liste l);
 int* list_to_tab(liste l);
 #endif
