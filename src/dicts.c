@@ -95,7 +95,7 @@ void free_dico(dict* dico){
 void print_dico(dict* dico){
     for (int i=0; i<dico->length;i++){
         printf("%d:",i);
-        print_duo(dico->table[i]);
+        print_duo_liste(dico->table[i]);
         printf("\n");
     }
 }

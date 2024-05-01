@@ -44,6 +44,7 @@ install:
 	make clean --no-print-directory;bear -- make go --no-print-directory
 
 
+
 #Compilation du fichier final.
 $(BINDIR)$(NAME):$(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^

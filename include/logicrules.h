@@ -21,6 +21,5 @@ void print_full_estimation(estimation_t* e);
 void print_estimation(line_est_t* e);
 void free_estimation(line_est_t* e);
 void free_full_estimation(estimation_t* e);
-int rule1_1_line(int* line,int* nums,line_est_t* est,int size);
 int apply_rules(picross_grid* grille_a_completer,picross_numbers* nums,estimation_t* est,int k);
 #endif

@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -11,6 +12,9 @@
 
 
 line_est_t* estimate_line(liste numbers,int n){
+    if (numbers == NULL){
+        return NULL;
+    }
     int nb_blocks = len_liste(numbers);
     int* numbers_tab = list_to_tab(numbers);
     duo* blocks = (duo*)malloc(sizeof(duo)*nb_blocks);
@@ -59,14 +63,25 @@ estimation_t* full_estimation(picross_numbers* nums){
     res->n = n;
     res->cols = cols;
     res->lines = lines;
-    printf("TEST:%d\n",res->n);
 
     return res;
 }
 
+int fill_with_0(int* line,int size){
+    int res = 0;
+    if (line[0] == 0 && line[size-1] == 0){
+        return 0;
+    }
+    for (int i = 0;i<size;i++){
+        if (line[i] != 0){
+            res++;
+            line[i] = 0;
+        }
+    }
+    return res;
+}
 
-
-int rule1_1_line(int* line,int* nums,line_est_t* est,int size){
+int rule1_1_line(int* line,int* nums,line_est_t* est){
     int res = 0;
     int nb_blocks = est->nb_blocks;
     for (int j = 0;j<nb_blocks;j++){
@@ -87,14 +102,15 @@ int rule1_1_line(int* line,int* nums,line_est_t* est,int size){
 }
 
 int rule1_2_line(int* line,int size,line_est_t* est){
-    int res =  0;
+    int res = 0;
     int nb_blocks = est->nb_blocks;
     for (int i = 0;i<size;i++){
         if (line[i] != 2){
             continue;
         }
-        if (i<est->est[0].x){
-            res++;
+        //printf("%d <",i);print_tab(line,size);printf("\n");
+        if (i < est->est[0].x){
+            //res++;
             line[i] = 0;
         }
         if (i > est->est[nb_blocks-1].y){
@@ -131,7 +147,55 @@ int rule2_2line(int* line,int size,line_est_t* est){
 int rule1_3line(int* line,int size,int* nums,line_est_t* est){
     int res = 0;
     int nb_blocks = est->nb_blocks;
-    //TODO
+    for (int j = 0;j<nb_blocks;j++){
+        //Start_blocks
+        int first = est->est[j].x;
+        bool any_one = false;
+        bool all_one = true;
+        if (line[first] == 1 && (first != 0 && line[first-1] == 2)){
+            for (int i = 0;i<nb_blocks;i++){
+                if (i == j){
+                    continue;
+                }
+                if (est->est[i].x <= first && est->est[i].y >= first){
+                    any_one = true;
+                    if (nums[i] == 1){
+                        all_one = all_one && true;
+                    }
+                    else{
+                        all_one = false;
+                    }
+                }
+            }
+            if (any_one && all_one){
+                line[first-1] = 0; //Since we need overlap this can never be the first block so no error expected
+                res++;
+            }
+        }
+        int last = est->est[j].y;
+        any_one = false;
+        all_one = true;
+        if (line[last] == 1 && (last != (size-1) && line[last+1] == 2)){
+            for (int i = 0;i<nb_blocks;i++){
+            if (i == j){
+                continue;
+            }
+            if (est->est[i].x <= last && est->est[i].y >= last){
+                any_one = true;
+                if (nums[i] == 1){
+                    all_one = all_one && true;
+                }
+                else{
+                    all_one = false;
+                }
+            }
+        }
+        if (any_one && all_one){
+            line[last+1] = 0; //Since we need overlap this can never be the last block so no error expected
+            res++;
+        }}
+    }
+    return res;
 }
 
 int apply_rules(picross_grid* grille_a_completer,picross_numbers* nums,estimation_t* est,int k){
@@ -143,16 +207,29 @@ int apply_rules(picross_grid* grille_a_completer,picross_numbers* nums,estimatio
             int* num_line = list_to_tab(nums->lig[i]);
             int size = nums->size;
             line_est_t* est_line = est->lines[i];
-            res += rule1_1_line(line, num_line, est_line,size);
-            rule2_2line(line, size, est_line);
-            res += rule1_2_line(line, size, est_line);
+            if (est_line == NULL){
+                //Cas ou la ligne est 0
+                res += fill_with_0(line, size);
+            }
+            else{
+                res += rule1_1_line(line, num_line, est_line);
+                rule2_2line(line, size, est_line);
+                res += rule1_2_line(line, size, est_line);
+                res += rule1_3line(line, size, num_line, est_line);
+            }
             //Cols
             int* col = get_col(grille_a_completer, size, i);
             int* num_col = list_to_tab(nums->col[i]);
             line_est_t* est_col = est->cols[i];
-            res += rule1_1_line(col, num_col, est_col,size);
-            rule2_2line(col, size, est_col);
-            res += rule1_2_line(col, size, est_col);
+            if (est_col == NULL){
+                res += fill_with_0(col, size);
+            }
+            else{
+                res += rule1_1_line(col, num_col, est_col);
+                rule2_2line(col, size, est_col);
+                res += rule1_2_line(col, size, est_col);
+                res += rule1_3line(col, size, num_col, est_col);
+            }
             apply_tab_to_col(grille_a_completer, col, i);
             free(col);
             free(num_col);
@@ -165,6 +242,10 @@ int apply_rules(picross_grid* grille_a_completer,picross_numbers* nums,estimatio
 
 
 void print_estimation(line_est_t* e){
+    if (e == NULL){
+        printf("(NULL) ");
+        return;
+    }
     printf("NB_BLOCKS:%d",e->nb_blocks);
     for (int i = 0;i<e->nb_blocks;i++){
         printf("(%d,%d) ",e->est[i].x,e->est[i].y);
@@ -185,6 +266,9 @@ void print_full_estimation(estimation_t* e){
 }
 
 void free_estimation(line_est_t* e){
+    if (e == NULL){
+        return;
+    }
     free(e->est);
     free(e);
 }

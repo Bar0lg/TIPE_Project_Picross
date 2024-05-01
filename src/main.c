@@ -21,6 +21,8 @@
 #define PRINTMODELE Fl(8)
 #define PRINTSOL Fl(9)
 #define BACKTRACK_ND Fl(10)
+#define LOGICRULES Fl(11)
+#define GENGRILLE Fl(12)
 
 #define DEFAULT BACKTRACK|PRINTSEED
 #define VERBOSE PRINTSEED | PRINTTIMEALGO | PRINTTIMEVALIDEUR | PRINTMODELE | PRINTSOL;
@@ -92,6 +94,12 @@ int main(int argc,char** argv){
         if (strcmp(arg,"--default") == 0){
             options |= DEFAULT;
         }
+        if (strcmp(arg,"--lr") == 0){
+            options |= LOGICRULES;
+        }
+        if (strcmp(arg,"-g") == 0){
+            options |= GENGRILLE;
+        }
 
         if (strcmp(arg, "--help") == 0){
             printf("Options: -n --seed --iter --chance --backtrack --brute --print-time-valideur --print-time-algo --print-seed --quiet --debug --print-model --print-sol\n ");
@@ -103,10 +111,10 @@ int main(int argc,char** argv){
         picross_grid* grille_a_trouver = gen_random_grid(n,chance);
         picross_numbers* numeros = gen_numbers_from_grid(grille_a_trouver);
         picross_grid* grille_unk = gen_unk_grid(n);
-        print_picc(grille_a_trouver);
+        //print_picc(grille_a_trouver);
         estimation_t* e = full_estimation(numeros);
-        print_nums(numeros);
-        apply_rules(grille_unk, numeros, e,3);
+        //print_nums(numeros);
+        apply_rules(grille_unk, numeros, e,10);
         print_picc(grille_unk);
         free_picross(grille_unk);
         free_full_estimation(e);
@@ -117,6 +125,20 @@ int main(int argc,char** argv){
     if (options & PRINTSEED){
         printf("seed:%d\n",seed);
     }
+    if (options & GENGRILLE){
+        printf("Generation de la grille %d",seed);
+        srand(seed);
+        picross_grid* grille = gen_random_grid(n, chance);
+        picross_numbers* nums = gen_numbers_from_grid(grille);
+        estimation_t* estimation = full_estimation(nums);
+        print_picc(grille);
+        print_nums(nums);
+        print_full_estimation(estimation);
+        free_picross(grille);
+        free_numbers(nums);
+        free_full_estimation(estimation);
+        return 0;
+    }
     for (int boucle = 1;boucle < iter +1;boucle++){
         clock_t t1_valid = 0;
         clock_t t2_valid = 0;
@@ -124,6 +146,10 @@ int main(int argc,char** argv){
         clock_t t1_algo = 0;
         clock_t t2_algo = 0;
         double delta_algo = 0;
+        clock_t t1_lr = 0;
+        clock_t t2_lr = 0;
+        double delta_lr = 0;
+        int logic_rules_completed = -1;
 
         srand(seed+boucle);
         picross_grid* grille_a_trouver = gen_random_grid(n,chance);
@@ -184,6 +210,14 @@ int main(int argc,char** argv){
             t1_valid = clock();
             valideur_det* valideur_partiel = gen_valideur_partiel(numeros);
             t2_valid = clock();
+            if (options & LOGICRULES){
+                t1_lr = clock();
+                estimation_t* estimation = full_estimation(numeros);
+                logic_rules_completed = apply_rules(grille_inconnue, numeros, estimation, 5);
+                t2_lr = clock();
+                free_full_estimation(estimation);
+                delta_lr = (double)(t2_lr - t1_lr) / CLOCKS_PER_SEC;
+            }
 
             t1_algo = clock();
             bool res = backtracking(grille_inconnue,valideur_partiel,0,0);
@@ -212,6 +246,7 @@ int main(int argc,char** argv){
                 printf("%d/%d resolu backtrack ",boucle,iter);
                 if (options & PRINTTIMEVALIDEUR){
                     printf("Temps valideur: %f sec ",delta_valid);
+                    printf("Temps LR:%f",delta_lr);
                 }
                 if (options & PRINTTIMEALGO){
                     printf("Temps algo: %f sec ",delta_algo);
@@ -225,6 +260,15 @@ int main(int argc,char** argv){
             t1_valid = clock();
             valideur_ndet* valideur_partiel_ndet = gen_valideur_ndet(numeros);
             t2_valid = clock();
+
+            if (options & LOGICRULES){
+                t1_lr = clock();
+                estimation_t* estimation = full_estimation(numeros);
+                logic_rules_completed = apply_rules(grille_inconnue, numeros, estimation, 5);
+                t2_lr = clock();
+                free_full_estimation(estimation);
+                delta_lr = (double)(t2_lr - t1_lr) / CLOCKS_PER_SEC;
+            }
 
             t1_algo = clock();
             bool res = backtracking_ndet(grille_inconnue,valideur_partiel_ndet,0,0);
@@ -252,6 +296,7 @@ int main(int argc,char** argv){
                 printf("%d/%d resolu backtrack-nd ",boucle,iter);
                 if (options & PRINTTIMEVALIDEUR){
                     printf("Temps valideur: %f sec ",delta_valid);
+                    printf("Temps LR:%f",delta_lr);
                 }
                 if (options & PRINTTIMEALGO){
                     printf("Temps algo: %f sec ",delta_algo);
