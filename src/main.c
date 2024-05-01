@@ -23,17 +23,22 @@
 #define BACKTRACK_ND Fl(10)
 #define LOGICRULES Fl(11)
 #define GENGRILLE Fl(12)
+#define RECORD Fl(13)
 
 #define DEFAULT BACKTRACK|PRINTSEED
 #define VERBOSE PRINTSEED | PRINTTIMEALGO | PRINTTIMEVALIDEUR | PRINTMODELE | PRINTSOL;
 #define ALL_TIME PRINTTIMEALGO | PRINTTIMEVALIDEUR
+
+#define RECORD_TO_FILE(file,seed,time_valid,time_lr,time_algo,lr_completed,mode) \
+fprintf(file,"%d %f %f %f %f %d %d\n",seed,time_valid,time_lr,time_algo,(time_algo+time_lr+time_valid),lr_completed,mode)
 
 int main(int argc,char** argv){
     int n = 3;
     int iter = 1;
     int seed = time(NULL);
     int options = 0;//Options par defaut
-
+    char file_name[50] = "";
+    FILE* record_file = NULL;
     int chance = 50;
     printf("Hello world!\n");
 
@@ -54,6 +59,11 @@ int main(int argc,char** argv){
         if (strcmp(arg, "--chance") ==0){
             assert(argc >= i+1);
             chance = atoi(argv[i+1]);
+        }
+        if (strcmp(arg, "-r") ==0){
+            assert(argc >= i+1);
+            options |= RECORD;
+            strcpy(file_name, argv[i+1]);
         }
         if (strcmp(arg,"--backtrack")== 0){
             options |= BACKTRACK;
@@ -107,20 +117,11 @@ int main(int argc,char** argv){
     }
     printf("Debut du programme...\n");
     if (options & DEBUG){
-        srand(seed);
-        picross_grid* grille_a_trouver = gen_random_grid(n,chance);
-        picross_numbers* numeros = gen_numbers_from_grid(grille_a_trouver);
-        picross_grid* grille_unk = gen_unk_grid(n);
-        //print_picc(grille_a_trouver);
-        estimation_t* e = full_estimation(numeros);
-        //print_nums(numeros);
-        apply_rules(grille_unk, numeros, e,10);
-        print_picc(grille_unk);
-        free_picross(grille_unk);
-        free_full_estimation(e);
-        free_picross(grille_a_trouver);
-        free_numbers(numeros);
+        printf("No code in debug mode");
         return 0;
+    }
+    if (options & RECORD){
+        record_file = fopen(file_name, "w");
     }
     if (options & PRINTSEED){
         printf("seed:%d\n",seed);
@@ -129,11 +130,16 @@ int main(int argc,char** argv){
         printf("Generation de la grille %d",seed);
         srand(seed);
         picross_grid* grille = gen_random_grid(n, chance);
+        picross_grid* lr_grid = gen_unk_grid(n);
         picross_numbers* nums = gen_numbers_from_grid(grille);
         estimation_t* estimation = full_estimation(nums);
+        int nb_lr = apply_rules(lr_grid, nums, estimation, 5);
         print_picc(grille);
         print_nums(nums);
         print_full_estimation(estimation);
+        printf("LR solved:%d\n",nb_lr);
+        print_picc(lr_grid);
+        free_picross(lr_grid);
         free_picross(grille);
         free_numbers(nums);
         free_full_estimation(estimation);
@@ -150,6 +156,7 @@ int main(int argc,char** argv){
         clock_t t2_lr = 0;
         double delta_lr = 0;
         int logic_rules_completed = -1;
+        int mode = 0;
 
         srand(seed+boucle);
         picross_grid* grille_a_trouver = gen_random_grid(n,chance);
@@ -160,6 +167,7 @@ int main(int argc,char** argv){
         }
 
         if (BRUTE & options){
+            mode = 0;
             picross_grid* grille_vide = gen_empty_grid(n);
             t1_valid = clock();
             valideur_det* valideur_complet = gen_valideur_total(numeros);
@@ -203,14 +211,19 @@ int main(int argc,char** argv){
                 }
                 printf("\n");
             }
+            if (options & RECORD){
+                RECORD_TO_FILE(record_file, seed+boucle, delta_valid, delta_lr, delta_algo, logic_rules_completed, mode);
+            }
 
         }
         if (BACKTRACK & options){
+            mode = 1;
             picross_grid* grille_inconnue = gen_unk_grid(n);
             t1_valid = clock();
             valideur_det* valideur_partiel = gen_valideur_partiel(numeros);
             t2_valid = clock();
             if (options & LOGICRULES){
+                mode = 3;
                 t1_lr = clock();
                 estimation_t* estimation = full_estimation(numeros);
                 logic_rules_completed = apply_rules(grille_inconnue, numeros, estimation, 5);
@@ -246,22 +259,28 @@ int main(int argc,char** argv){
                 printf("%d/%d resolu backtrack ",boucle,iter);
                 if (options & PRINTTIMEVALIDEUR){
                     printf("Temps valideur: %f sec ",delta_valid);
-                    printf("Temps LR:%f",delta_lr);
+                    printf("Temps LR: %f sec ",delta_lr);
+                    printf("Nb fait:%d ",logic_rules_completed);
                 }
                 if (options & PRINTTIMEALGO){
                     printf("Temps algo: %f sec ",delta_algo);
                 }
                 printf("\n");
             }
+            if (options & RECORD){
+                RECORD_TO_FILE(record_file, seed+boucle, delta_valid, delta_lr, delta_algo, logic_rules_completed, mode);
+            }
 
         }
         if (BACKTRACK_ND & options){
+            mode = 2;
             picross_grid* grille_inconnue = gen_unk_grid(n);
             t1_valid = clock();
             valideur_ndet* valideur_partiel_ndet = gen_valideur_ndet(numeros);
             t2_valid = clock();
 
             if (options & LOGICRULES){
+                mode = 4;
                 t1_lr = clock();
                 estimation_t* estimation = full_estimation(numeros);
                 logic_rules_completed = apply_rules(grille_inconnue, numeros, estimation, 5);
@@ -296,18 +315,25 @@ int main(int argc,char** argv){
                 printf("%d/%d resolu backtrack-nd ",boucle,iter);
                 if (options & PRINTTIMEVALIDEUR){
                     printf("Temps valideur: %f sec ",delta_valid);
-                    printf("Temps LR:%f",delta_lr);
+                    printf("Temps LR: %f sec",delta_lr);
+                    printf("Nb fait: %d ",logic_rules_completed);
                 }
                 if (options & PRINTTIMEALGO){
                     printf("Temps algo: %f sec ",delta_algo);
                 }
                 printf("\n");
             }
+            if (options & RECORD){
+                RECORD_TO_FILE(record_file, seed+boucle, delta_valid, delta_lr, delta_algo, logic_rules_completed, mode);
+            }
 
         }
         free_picross(grille_a_trouver);
         free_numbers(numeros);
         
+    }
+    if (options & RECORD){
+        fclose(record_file);
     }
     
     printf("Fin programme\n");

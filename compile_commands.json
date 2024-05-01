@@ -1,7 +1,7 @@
 [
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -13,13 +13,13 @@
       "build/obj/automates.o",
       "src/automates.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/automates.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/automates.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/automates.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/automates.o"
   },
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -31,13 +31,13 @@
       "build/obj/dicts.o",
       "src/dicts.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/dicts.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/dicts.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/dicts.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/dicts.o"
   },
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -49,13 +49,31 @@
       "build/obj/listes.o",
       "src/listes.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/listes.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/listes.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/listes.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/listes.o"
   },
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-fsanitize=address,undefined",
+      "-g",
+      "-I",
+      "include/",
+      "-o",
+      "build/obj/logicrules.o",
+      "src/logicrules.c"
+    ],
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/logicrules.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/logicrules.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -67,13 +85,13 @@
       "build/obj/main.o",
       "src/main.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/main.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/main.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/main.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/main.o"
   },
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -85,13 +103,13 @@
       "build/obj/picross.o",
       "src/picross.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/picross.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/picross.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/picross.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/picross.o"
   },
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -103,13 +121,13 @@
       "build/obj/solver.o",
       "src/solver.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/solver.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/solver.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/solver.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/solver.o"
   },
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -121,13 +139,13 @@
       "build/obj/utils.o",
       "src/utils.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/utils.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/utils.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/utils.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/utils.o"
   },
   {
     "arguments": [
-      "/sbin/gcc",
+      "/usr/bin/gcc",
       "-c",
       "-Wall",
       "-Wextra",
@@ -139,8 +157,8 @@
       "build/obj/valideurs.o",
       "src/valideurs.c"
     ],
-    "directory": "/home/tristan/Documents/Prepa/TIPE/Code",
-    "file": "/home/tristan/Documents/Prepa/TIPE/Code/src/valideurs.c",
-    "output": "/home/tristan/Documents/Prepa/TIPE/Code/build/obj/valideurs.o"
+    "directory": "/home/tristan/Documents/Prepa/TIPE_Project_Picross",
+    "file": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/src/valideurs.c",
+    "output": "/home/tristan/Documents/Prepa/TIPE_Project_Picross/build/obj/valideurs.o"
   }
 ]
