@@ -1,0 +1,123 @@
+#!/bin/sh
+#./build/runner.sh -q --lr -n 4 --iter 50000 --backtrack      -r ../../DATA/lr_backtrack_50000_4.txt && \
+#./build/runner.sh -q --lr -n 4 --iter 50000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_50000_4.txt && \
+#./build/runner.sh -q --lr -n 5 --iter 50000 --backtrack      -r ../../DATA/lr_backtrack_50000_5.txt && \
+#./build/runner.sh -q --lr -n 5 --iter 50000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_50000_5.txt && \
+#./build/runner.sh -q --lr -n 6 --iter 50000 --backtrack      -r ../../DATA/lr_backtrack_50000_6.txt && \
+#./build/runner.sh -q --lr -n 6 --iter 50000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_50000_6.txt && \
+#./build/runner.sh -q --lr -n 7 --iter 50000 --backtrack      -r ../../DATA/lr_backtrack_50000_7.txt && \
+#./build/runner.sh -q --lr -n 7 --iter 50000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_50000_7.txt && \
+#./build/runner.sh -q --lr -n 8 --iter 50000 --backtrack      -r ../../DATA/lr_backtrack_50000_8.txt && \
+#./build/runner.sh -q --lr -n 8 --iter 50000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_50000_8.txt && \
+#./build/runner.sh -q --lr -n 9 --iter 50000 --backtrack      -r ../../DATA/lr_backtrack_50000_9.txt && \
+#./build/runner.sh -q --lr -n 9 --iter 50000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_50000_9.txt && \
+#./build/runner.sh -q --lr -n 10 --iter 50000 --backtrack     -r ../../DATA/lr_backtrack_50000_10.txt && \
+#./build/runner.sh -q --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/lr_backtrack_nd_50000_10.txt && \
+#./build/runner.sh -q --lr -n 11 --iter 50000 --backtrack     -r ../../DATA/lr_backtrack_50000_11.txt && \
+#./build/runner.sh -q --lr -n 11 --iter 50000 --backtrack-nd  -r ../../DATA/lr_backtrack_nd_50000_11.txt && \
+#./build/runner.sh -q --lr -n 12 --iter 5000 --backtrack      -r ../../DATA/lr_backtrack_5000_12.txt && \
+#./build/runner.sh -q --lr -n 12 --iter 5000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_5000_12.txt && \
+#./build/runner.sh -q --lr -n 13 --iter 5000 --backtrack      -r ../../DATA/lr_backtrack_5000_13.txt && \
+#./build/runner.sh -q --lr -n 13 --iter 5000 --backtrack-nd   -r ../../DATA/lr_backtrack_nd_5000_13.txt && \
+#./build/runner.sh -q --lr -n 14 --iter 5000 --backtrack      -r ../../DATA/lr_backtrack_5000_14.txt && \
+#./build/runner.sh -q --lr -n 14 --iter 500 --backtrack-nd    -r ../../DATA/lr_backtrack_nd_500_14.txt && \
+#./build/runner.sh -q --lr -n 15 --iter 5000 --backtrack      -r ../../DATA/lr_backtrack_5000_15.txt && \
+#./build/runner.sh -q --lr -n 15 --iter 500 --backtrack-nd    -r ../../DATA/lr_backtrack_nd_500_15.txt && \
+#./build/runner.sh -q --lr -n 16 --iter 5000 --backtrack      -r ../../DATA/lr_backtrack_5000_16.txt && \
+#./build/runner.sh -q --lr -n 16 --iter 50 --backtrack-nd     -r ../../DATA/lr_backtrack_nd_50_16.txt && \
+./build/runner.sh  --lr -n 17 --iter 500 --backtrack      -r ../../DATA/lr_backtrack_5000_17.txt && \
+#./build/runner.sh  --lr -n 17 --iter 50 --backtrack-nd     -r ../../DATA/lr_backtrack_nd_50_17.txt && \
+#./build/runner.sh  --lr -n 18 --iter 100 --backtrack      -r ../../DATA/lr_backtrack_1000_18.txt && \
+#./build/runner.sh  --lr -n 18 --iter 50 --backtrack-nd     -r ../../DATA/lr_backtrack_nd_50_18.txt && \
+#./build/runner.sh  --lr -n 19 --iter 100 --backtrack      -r ../../DATA/lr_backtrack_100_19.txt && \
+#./build/runner.sh  --lr -n 20 --iter 100 --backtrack      -r ../../DATA/lr_backtrack_100_20.txt && \
+#./build/runner.sh  --chance 10 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_10_50000_4.txt && \
+#./build/runner.sh  --chance 20 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_20_50000_4.txt && \
+#./build/runner.sh  --chance 30 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_30_50000_4.txt && \
+#./build/runner.sh  --chance 40 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_40_50000_4.txt && \
+#./build/runner.sh  --chance 50 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_50_50000_4.txt && \
+#./build/runner.sh  --chance 60 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_60_50000_4.txt && \
+#./build/runner.sh  --chance 70 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_70_50000_4.txt && \
+#./build/runner.sh  --chance 80 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_80_50000_4.txt && \
+#./build/runner.sh  --chance 90 --lr -n 4 --iter 50000 --backtrack  -r ../../DATA/chance_90_50000_4.txt && \
+#./build/runner.sh  --chance 10 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_10_50000_6.txt && \
+#./build/runner.sh  --chance 20 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_20_50000_6.txt && \
+#./build/runner.sh  --chance 30 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_30_50000_6.txt && \
+#./build/runner.sh  --chance 40 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_40_50000_6.txt && \
+#./build/runner.sh  --chance 50 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_50_50000_6.txt && \
+#./build/runner.sh  --chance 60 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_60_50000_6.txt && \
+#./build/runner.sh  --chance 70 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_70_50000_6.txt && \
+#./build/runner.sh  --chance 80 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_80_50000_6.txt && \
+#./build/runner.sh  --chance 90 --lr -n 6 --iter 50000 --backtrack  -r ../../DATA/chance_90_50000_6.txt && \
+#./build/runner.sh  --chance 10 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_10_50000_8.txt && \
+#./build/runner.sh  --chance 20 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_20_50000_8.txt && \
+#./build/runner.sh  --chance 30 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_30_50000_8.txt && \
+#./build/runner.sh  --chance 40 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_40_50000_8.txt && \
+#./build/runner.sh  --chance 50 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_50_50000_8.txt && \
+#./build/runner.sh  --chance 60 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_60_50000_8.txt && \
+#./build/runner.sh  --chance 70 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_70_50000_8.txt && \
+#./build/runner.sh  --chance 80 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_80_50000_8.txt && \
+#./build/runner.sh  --chance 90 --lr -n 8 --iter 50000 --backtrack  -r ../../DATA/chance_90_50000_8.txt && \
+#./build/runner.sh  --chance 10 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_10_50000_10.txt && \
+#./build/runner.sh  --chance 20 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_20_50000_10.txt && \
+#./build/runner.sh  --chance 30 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_30_50000_10.txt && \
+#./build/runner.sh  --chance 40 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_40_50000_10.txt && \
+#./build/runner.sh  --chance 50 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_50_50000_10.txt && \
+#./build/runner.sh  --chance 60 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_60_50000_10.txt && \
+#./build/runner.sh  --chance 70 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_70_50000_10.txt && \
+#./build/runner.sh  --chance 80 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_80_50000_10.txt && \
+#./build/runner.sh  --chance 90 --lr -n 10 --iter 50000 --backtrack  -r ../../DATA/chance_90_50000_10.txt && \
+./build/runner.sh  --chance 10 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_10_5000_12.txt && \
+./build/runner.sh  --chance 20 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_20_5000_12.txt && \
+./build/runner.sh  --chance 30 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_30_5000_12.txt && \
+./build/runner.sh  --chance 40 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_40_5000_12.txt && \
+./build/runner.sh  --chance 50 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_50_5000_12.txt && \
+./build/runner.sh  --chance 60 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_60_5000_12.txt && \
+./build/runner.sh  --chance 70 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_70_5000_12.txt && \
+./build/runner.sh  --chance 80 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_80_5000_12.txt && \
+./build/runner.sh  --chance 90 --lr -n 12 --iter 1000 --backtrack  -r ../../DATA/chance_90_5000_12.txt && \
+./build/runner.sh  --chance 10 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_10_50000_4.txt && \
+./build/runner.sh  --chance 20 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_20_50000_4.txt && \
+./build/runner.sh  --chance 30 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_30_50000_4.txt && \
+./build/runner.sh  --chance 40 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_40_50000_4.txt && \
+./build/runner.sh  --chance 50 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_50_50000_4.txt && \
+./build/runner.sh  --chance 60 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_60_50000_4.txt && \
+./build/runner.sh  --chance 70 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_70_50000_4.txt && \
+./build/runner.sh  --chance 80 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_80_50000_4.txt && \
+./build/runner.sh  --chance 90 --lr -n 4 --iter 50000 --backtrack-nd  -r ../../DATA/chance_90_50000_4.txt && \
+./build/runner.sh  --chance 10 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_10_50000_6.txt && \
+./build/runner.sh  --chance 20 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_20_50000_6.txt && \
+./build/runner.sh  --chance 30 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_30_50000_6.txt && \
+./build/runner.sh  --chance 40 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_40_50000_6.txt && \
+./build/runner.sh  --chance 50 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_50_50000_6.txt && \
+./build/runner.sh  --chance 60 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_60_50000_6.txt && \
+./build/runner.sh  --chance 70 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_70_50000_6.txt && \
+./build/runner.sh  --chance 80 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_80_50000_6.txt && \
+./build/runner.sh  --chance 90 --lr -n 6 --iter 50000 --backtrack-nd  -r ../../DATA/chance_90_50000_6.txt && \
+./build/runner.sh  --chance 10 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_10_50000_8.txt && \
+./build/runner.sh  --chance 20 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_20_50000_8.txt && \
+./build/runner.sh  --chance 30 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_30_50000_8.txt && \
+./build/runner.sh  --chance 40 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_40_50000_8.txt && \
+./build/runner.sh  --chance 50 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_50_50000_8.txt && \
+./build/runner.sh  --chance 60 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_60_50000_8.txt && \
+./build/runner.sh  --chance 70 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_70_50000_8.txt && \
+./build/runner.sh  --chance 80 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_80_50000_8.txt && \
+./build/runner.sh  --chance 90 --lr -n 8 --iter 50000 --backtrack-nd  -r ../../DATA/chance_90_50000_8.txt && \
+./build/runner.sh  --chance 10 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_10_50000_10.txt && \
+./build/runner.sh  --chance 20 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_20_50000_10.txt && \
+./build/runner.sh  --chance 30 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_30_50000_10.txt && \
+./build/runner.sh  --chance 40 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_40_50000_10.txt && \
+./build/runner.sh  --chance 50 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_50_50000_10.txt && \
+./build/runner.sh  --chance 60 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_60_50000_10.txt && \
+./build/runner.sh  --chance 70 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_70_50000_10.txt && \
+./build/runner.sh  --chance 80 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_80_50000_10.txt && \
+./build/runner.sh  --chance 90 --lr -n 10 --iter 50000 --backtrack-nd  -r ../../DATA/chance_90_50000_10.txt && \
+./build/runner.sh  --chance 10 --lr -n 12 --iter 1000 --backtrack-nd -r ../../DATA/chance_10_5000_12.txt && \
+./build/runner.sh  --chance 20 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_20_5000_12.txt && \
+./build/runner.sh  --chance 30 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_30_5000_12.txt && \
+./build/runner.sh  --chance 40 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_40_5000_12.txt && \
+./build/runner.sh  --chance 50 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_50_5000_12.txt && \
+./build/runner.sh  --chance 60 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_60_5000_12.txt && \
+./build/runner.sh  --chance 70 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_70_5000_12.txt && \
+./build/runner.sh  --chance 80 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_80_5000_12.txt && \
+./build/runner.sh  --chance 90 --lr -n 12 --iter 1000 --backtrack-nd  -r ../../DATA/chance_90_5000_12.txt
