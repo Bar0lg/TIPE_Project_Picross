@@ -105,7 +105,6 @@ bool backtracking(picross_grid* grid, valideur_det* valideur, int i, int j){
     else{
         i_next = i;
     }
-    //assert(i_next < grid->size);
     if (grid->grid[i][j] != 2){
         return backtracking(grid,valideur,i_next,j_next);
     }
@@ -115,14 +114,12 @@ bool backtracking(picross_grid* grid, valideur_det* valideur, int i, int j){
             return true;
         }
     }
-    //printf("Zero raté:%d %d\n",i,j);
     grid->grid[i][j] = 1;
     if (verif_ligne_col(grid,valideur,i,j)){
         if (backtracking(grid,valideur,i_next,j_next)){
             return true;
         }
     }
-    //printf("Tout raté:%d %d\n",i,j);
     grid->grid[i][j] = 2;
     return false;
 
