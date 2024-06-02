@@ -77,11 +77,11 @@ def main():
     multiplier = 0
     offset = width
     plt.cla()
-    plt.bar(x + offset,valid_means,width,label="valid_t",color="orange")
-    plt.bar(x+offset,algos_mean,width,label="algo_t",bottom=valid_means,color="red")
+    plt.bar(x + offset,valid_means,width,label="Création des automates déterministes",color="orange")
+    plt.bar(x+offset,algos_mean,width,label="Algorithme de backtracking avec automtes déterministes",bottom=valid_means,color="red")
     offset += offset
-    plt.bar(x + offset,valid_means_nd,width,label="valid_nd_t",color="green")
-    plt.bar(x+offset,algos_mean_nd,width,label="algo_nd_t",bottom=valid_means_nd,color="blue")
+    plt.bar(x + offset,valid_means_nd,width,label="Création des automates non-déterministes",color="green")
+    plt.bar(x+offset,algos_mean_nd,width,label="Algorithme de backtracking avec automtes déterministes",bottom=valid_means_nd,color="blue")
     plt.yscale("log")
     plt.title("Moyennes du temps d'execution des algorithmes de backtracking")
     plt.ylabel("Secondes")
@@ -267,4 +267,4 @@ chance12_f = [
 "../DATA/chance_90_5000_12.txt",
 ]
 if __name__ == "__main__":
-    comprar()
+    main()

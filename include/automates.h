@@ -59,7 +59,7 @@ bool reconnu_afnd(automate_nd *A, int *input, int size_input);
 //Donne tout les etats atteint par un afnd
 dict* etats_atteints(automate_nd* A);
 
-//Determinise un automate (TODO: Faire un meilleur algo)
+//Determinise un automate
 automate_d* determiniser(automate_nd* A);
 //Affiche l'automate non deterministe
 void print_auto_nd(automate_nd* A);
