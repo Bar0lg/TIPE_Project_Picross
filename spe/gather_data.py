@@ -1,7 +1,11 @@
 import matplotlib.pyplot as plt
+import matplotlib
 import numpy as np
 import sys
 
+font = {'size' : 18}
+
+matplotlib.rc('font', **font)
 
 def col(arr,n):
     return [x[n] for x in arr]
@@ -64,10 +68,10 @@ def main_2():
 def main():
     all_backtrack = [g_data(x) for x in backtrack_f]
     all_backtrack_nd = [g_data(x) for x in backtrack_nd_f]
-    valid_means =       np.asarray([np.mean(x["valid_t"]) for x in all_backtrack])
-    valid_means_nd =    np.asarray([np.mean(x["valid_t"]) for x in all_backtrack_nd])
-    algos_mean =        np.asarray([np.mean(x["algo_t"]) for x in all_backtrack])
-    algos_mean_nd =     np.asarray([np.mean(x["algo_t"]) for x in all_backtrack_nd])
+    valid_means =       np.asarray([np.median(x["valid_t"]) for x in all_backtrack])
+    valid_means_nd =    np.asarray([np.median(x["valid_t"]) for x in all_backtrack_nd])
+    algos_mean =        np.asarray([np.median(x["algo_t"]) for x in all_backtrack])
+    algos_mean_nd =     np.asarray([np.median(x["algo_t"]) for x in all_backtrack_nd])
     n =list(map(str, range(4,22)))
     x = np.arange(len(n))
     valid_means,valid_means_nd = equilibrate(valid_means,valid_means_nd)
@@ -78,12 +82,12 @@ def main():
     offset = width
     plt.cla()
     plt.bar(x + offset,valid_means,width,label="Création des automates déterministes",color="orange")
-    plt.bar(x+offset,algos_mean,width,label="Algorithme de backtracking avec automtes déterministes",bottom=valid_means,color="red")
+    plt.bar(x+offset,algos_mean,width,label="Algorithme de backtracking avec automates déterministes",bottom=valid_means,color="red")
     offset += offset
-    plt.bar(x + offset,valid_means_nd,width,label="Création des automates non-déterministes",color="green")
-    plt.bar(x+offset,algos_mean_nd,width,label="Algorithme de backtracking avec automtes déterministes",bottom=valid_means_nd,color="blue")
+    plt.bar(x + offset,valid_means_nd,width,label="Création des automates non-déterministes",color="black")
+    plt.bar(x+offset,algos_mean_nd,width,label="Algorithme de backtracking avec automates déterministes",bottom=valid_means_nd,color="blue")
     plt.yscale("log")
-    plt.title("Moyennes du temps d'execution des algorithmes de backtracking")
+    plt.title("Médiannes du temps d'exécution des algorithmes de backtracking")
     plt.ylabel("Secondes")
     plt.xlabel("Taille du graphe")
     
