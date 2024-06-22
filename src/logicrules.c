@@ -69,6 +69,7 @@ estimation_t* full_estimation(picross_numbers* nums){
 
 int fill_with_0(int* line,int size){
     int res = 0;
+    //Heuristique pour gagner du temps
     if (line[0] == 0 && line[size-1] == 0){
         return 0;
     }

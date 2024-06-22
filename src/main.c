@@ -33,7 +33,7 @@
 fprintf(file,"%d %f %f %f %f %d %d\n",seed,time_valid,time_lr,time_algo,(time_algo+time_lr+time_valid),lr_completed,mode)
 
 int main(int argc,char** argv){
-    int n = 3;
+    int n = 4;
     int iter = 1;
     int seed = time(NULL);
     int options = 0;//Options par defaut
@@ -110,13 +110,10 @@ int main(int argc,char** argv){
         if (strcmp(arg,"-g") == 0){
             options |= GENGRILLE;
         }
-
-        if (strcmp(arg, "--help") == 0){
-            printf("Options: -n --seed --iter --chance --backtrack --brute --print-time-valideur --print-time-algo --print-seed --quiet --debug --print-model --print-sol\n ");
-        }
     }
     printf("Debut du programme...\n");
     if (options & DEBUG){
+        //INSERER CODE DEBUG ICI
         printf("No code in debug mode");
         return 0;
     }
@@ -183,12 +180,6 @@ int main(int argc,char** argv){
             if (options & PRINTSOL){
                 print_picc(grille_vide);
             }
-            //for (int i=0;i<3;i++){
-            //    printf("%d\n",i);
-            //    print_auto(valideur_complet->ligne[i]);
-            //    print_auto(valideur_complet->col[i]);
-            //
-            //}
             free_picross(grille_vide);
             free_valideur_det(valideur_complet);
 

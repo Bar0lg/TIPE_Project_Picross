@@ -40,10 +40,6 @@ go:
 	chmod +x $(BUILDDIR)$(NOM_RUNNER)
 	echo "Installation effectue avec Succes"
 
-install:
-	make clean --no-print-directory;bear -- make go --no-print-directory
-
-
 
 #Compilation du fichier final.
 $(BINDIR)$(NAME):$(OBJ)

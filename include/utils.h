@@ -4,7 +4,7 @@
 #include "listes.h"
 #include <stdbool.h>
 
-
+//Permet de creer les flags dans main.c
 #define Fl(n) (int)1 << n
 
 
